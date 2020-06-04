@@ -1,0 +1,2 @@
+Each entry should begin with the following format:
+firstL -- TIMESTAMP\n

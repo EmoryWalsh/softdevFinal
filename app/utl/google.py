@@ -16,7 +16,17 @@ DIR += '/'
 
 def gen_authlink(callback):
     """Generate link for user to authorize account access."""
-    
+    scopes = ['https://www.googleapis.com/auth/drive.file']
+    params = {
+        'client_id':CLIENT_ID,
+        'redirect_uri':callback,
+        'response_type':'code',
+        'scope':' '.join(scopes),
+        'access_type':'offline', # i don't fully understand this one tbh
+        # should i add state? idk
+        'prompt':'consent'
+        }
+    return 'https://accounts.google.com/o/oauth2/v2/auth?'+urlencode(params)
     pass
 
 def trade_for_tokens(authcode):
@@ -40,3 +50,7 @@ with open(DIR+'../keys.json','r') as keyfile:
     keys = json.loads(keyfile.read())
     CLIENT_ID = keys['google_client_id']
     CLIENT_SECRET = keys['google_client_secret']
+
+# =============== TEST CODE ===============
+
+print(gen_authlink('http://localhost:5000/google_oauth'))

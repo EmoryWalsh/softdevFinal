@@ -29,12 +29,25 @@ def gen_authlink(callback):
     return 'https://accounts.google.com/o/oauth2/v2/auth?'+urlencode(params)
     pass
 
-def trade_for_tokens(authcode):
+def trade_for_tokens(authcode,redirect_uri):
     """Requests access/refresh tokens using the callback authorization code.
 
     See: https://developers.google.com/identity/protocols/oauth2/web-server,  HTTP/REST Step 5
 
     """
+    headers = {'Content-Type':'application/x-www-form-urlencoded'}
+    body = urlencode({
+        'code':authcode,
+        'client_id':CLIENT_ID,
+        'client_secret':CLIENT_SECRET,
+        'redirect_uri':redirect_uri,
+        'grant_type':'authorization_code'
+        })
+    conn = http.client.HTTPSConnection('oauth2.googleapis.com')
+    conn.request('POST','/token',headers=headers,body=body)
+    response = conn.getresponse()
+    print(response)
+    print(response.read())
     pass
 
 def replace_access_tokens(refresh_token):
@@ -53,4 +66,4 @@ with open(DIR+'../keys.json','r') as keyfile:
 
 # =============== TEST CODE ===============
 
-print(gen_authlink('http://localhost:5000/google_oauth'))
+# print(gen_authlink('http://localhost:5000/google_oauth'))

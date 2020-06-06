@@ -4,3 +4,6 @@ firstL -- TIMESTAMP\n
 kiranV -- 2020-06-05 22:15
 -toyed with OAuth2 API references, wrote code to generate user authentication link
 -created tables for sqlite3 database based on design doc
+
+kiranV -- 2020-06-06 09:53
+-successfully used Google People API to gain user profile/email information

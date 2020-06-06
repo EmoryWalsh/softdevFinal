@@ -7,3 +7,7 @@ kiranV -- 2020-06-05 22:15
 
 kiranV -- 2020-06-06 09:53
 -successfully used Google People API to gain user profile/email information
+
+kiranV -- 2020-06-06 18:36
+-set up sqlite database 'users' table function to store access keys longterm
+-completed google authorization/login sequence-login now works!!

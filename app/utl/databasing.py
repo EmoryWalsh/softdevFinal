@@ -26,8 +26,7 @@ def init_tables():
         'users' : [
             ['uid','INTEGER PRIMARY KEY'],
             ['username','TEXT'],
-            ['access_token','TEXT'],
-            ['refresh_token','TEXT']
+            ['access_token','TEXT']
             ] ,
         'bookshelves' : [
             ['shelf_id','INTEGER PRIMARY KEY'],

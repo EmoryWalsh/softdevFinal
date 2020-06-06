@@ -16,18 +16,17 @@ DIR += '/'
 
 def gen_authlink(callback):
     """Generate link for user to authorize account access."""
-    scopes = ['https://www.googleapis.com/auth/drive.file']
+    scopes = ['https://www.googleapis.com/auth/drive.file','profile','email']
     params = {
         'client_id':CLIENT_ID,
         'redirect_uri':callback,
         'response_type':'code',
         'scope':' '.join(scopes),
-        'access_type':'offline', # i don't fully understand this one tbh
+        # 'access_type':'offline', # i don't fully understand this one tbh
         # should i add state? idk
-        'prompt':'consent'
+        # 'prompt' intentionally removed
         }
     return 'https://accounts.google.com/o/oauth2/v2/auth?'+urlencode(params)
-    pass
 
 def trade_for_tokens(authcode,redirect_uri):
     """Requests access/refresh tokens using the callback authorization code.
@@ -46,9 +45,20 @@ def trade_for_tokens(authcode,redirect_uri):
     conn = http.client.HTTPSConnection('oauth2.googleapis.com')
     conn.request('POST','/token',headers=headers,body=body)
     response = conn.getresponse()
-    print(response)
-    print(response.read())
-    pass
+    tokens = json.loads(response.read())
+    conn.close()
+    conn = http.client.HTTPSConnection('people.googleapis.com')
+    headers = {
+        'Authorization':'Bearer '+tokens['access_token'],
+        'Accept':'application/json'
+        }
+    query = urlencode({
+        'personFields':'emailAddresses,names'
+        })
+    conn.request('GET','/v1/people/me?'+query,headers=headers)
+    response = conn.getresponse()
+    profile = json.loads(response.read())
+    print(json.dumps(profile,indent=4))
 
 def replace_access_tokens(refresh_token):
     """For when access token expires, get new access token"""

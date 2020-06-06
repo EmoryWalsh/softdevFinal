@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Home</title>
-    </head>
-    <body>
-        this is home
-    </body>
+  <head>
+    <title>Home</title>
+  </head>
+  <body>
+	{% for msg in get_flashed_messages() %}
+	<p>{{msg}}</p><hr />
+	{% endfor %}
+    this is home
+  </body>
 </html>

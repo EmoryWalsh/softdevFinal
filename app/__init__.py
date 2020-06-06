@@ -3,11 +3,15 @@
 # P05 -- The Bookshelf / Flask Routes
 # 2020-06-05
 
-from flask import Flask, render_template, url_for, request, redirect
-from utl import databasing as db
+from flask import Flask, render_template, url_for, request, redirect, session, flash
+
+import utl.databasing as db
 from utl import google
+import os
 
 app = Flask(__name__)
+app.secret_key = os.urandom(32)
+
 
 @app.route('/')
 def home():
@@ -23,16 +27,20 @@ def google_auth():
         return redirect( url_for('home') )
     if 'code' in request.args:
         # then user has already authorized: need to review scopes, exchange for tokens
-        print(request.args['code'])
-        google.trade_for_tokens( request.args['code'], request.base_url )
+        # TODO @kiran: review scopes!
+        # print(request.args['code'])
+        session['uid'] = google.trade_for_tokens( request.args['code'], request.base_url )
+        userinfo = db.get_userinfo(session['uid'])
+        flash('You have been logged in. Welcome, {0[username]}!'.format(userinfo))
         return redirect( url_for('home') )
     else:
         # user has just clicked a "login" link, needs to be redirected to google
+        if 'uid' in session:
+            flash('You are already logged in!')
+            return redirect( url_for('home') )
         auth_url = google.gen_authlink( request.base_url )
-        print(auth_url)
+        # print(auth_url)
         return redirect( auth_url )
-
-    
 
 if __name__ == '__main__':
     app.debug = True

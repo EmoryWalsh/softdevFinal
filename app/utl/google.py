@@ -8,6 +8,8 @@ import json
 from urllib.parse import urlencode
 import os
 
+import utl.databasing as db
+
 # early prep for future apache deployment
 DIR = os.path.dirname(__file__) or '.'
 DIR += '/'
@@ -58,11 +60,16 @@ def trade_for_tokens(authcode,redirect_uri):
     conn.request('GET','/v1/people/me?'+query,headers=headers)
     response = conn.getresponse()
     profile = json.loads(response.read())
-    print(json.dumps(profile,indent=4))
+    # print(json.dumps(profile,indent=4,sort_keys=True))
+    uid = profile['emailAddresses'][0]['metadata']['source']['id']
+    db.update_user(
+        uid,
+        profile['names'][0]['displayName'],
+        profile['emailAddresses'][0]['value'],
+        tokens['access_token']
+        )
+    return uid
 
-def replace_access_tokens(refresh_token):
-    """For when access token expires, get new access token"""
-    pass
 
 # =============== GOOGLE DOCS ===============
 

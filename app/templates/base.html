@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- Bootstrap CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style>
+      @font-face {
+        font-family: myFirstFont;
+        src: url(sansation_light.woff);
+      }
+      div {
+        font-family: myFirstFont;
+      }
+      .title {
+    		padding-top: 25px;
+    		padding-bottom: 20px;
+    		color:#010b13;
+    		background-color:white;
+    	}
+      {% block style %}
+      {% endblock %}
+    </style>
+
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            {% block title %}
+            {% endblock %}
+        </title>
+        {% block heading %}
+        {% endblock %}
+    </head>
+
+    <body style="background-color:#f4f0ec;">
+      <font face="Bedrock">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+          <img src="/static/img/logo.jpg" width="45" height="45" alt="logo" style="padding:4px;">
+          <a class="navbar-brand" href="#">Flying Saucers: <i>The Bookshelf</i></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+              <div class="navbar-nav">
+                <a class="nav-item nav-link" href={{ url_for('home') }}>Home</a>
+                <a class="nav-item nav-link " href={{ url_for('myshelves') }}>My Bookshelves</a>
+                <a class="nav-item nav-link" href={{ url_for('bookfinder') }}>Graphs</a>
+                <a class="nav-item nav-link" href={{ url_for('help') }}>Help</a>
+              </div>
+            </div>
+          </nav>
+
+          <br>
+      		<div class="container text-center border rounded title">
+      			<h1>{% block pgtitle %}{% endblock %}</h1>
+      		</div>
+
+          {% block content %}
+          {% endblock %}
+
+          <br><br><br><br><br><br>
+
+          <footer class="footer fixed-bottom bg-dark">
+              <br>
+              <div style="text-align: center">
+                  <span class="text-muted">
+                      &copy; Flying Saucers 2020
+                      <br>Emory Walsh, Sophie Nichol, Kiran Vuksanaj, & Lauren Pehlivanian
+                  </span>
+              </div>
+              <br>
+          </footer>
+        </font>
+    </body>
+
+    {% block script %}
+    {% endblock %}
+
+</html>

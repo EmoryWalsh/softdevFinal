@@ -1,13 +1,10 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Home</title>
-  </head>
-  <body>
-	{% for msg in get_flashed_messages() %}
-	<p>{{msg}}</p><hr />
-	{% endfor %}
-    this is home.<br />
-	<a href="/auth">Login</a>
-  </body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block pgtitle %}Home{% endblock%}
+
+{% block content %}
+!
+        this is home
+{% endblock %}

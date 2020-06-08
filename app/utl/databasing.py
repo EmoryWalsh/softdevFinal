@@ -115,8 +115,16 @@ def get_bookinfo(book_id):
 
 def searchfor_book(book_title):
     """Return {title,description,rating,authors,genres,rating_count,cover_url} for a specified book_id"""
-    print("searching for: "+capitalize_title(book_title))
-    return 0
+    book_title = capitalize_title(book_title) #book_data.csv titles are uppercase
+    db = sqlite3.connect(DB_FILENAME)
+    c = db.cursor()
+    #find book_id associated w book_title (use first instance)
+    c.execute('SELECT book_id FROM books WHERE title=? LIMIT 1;', (book_title,))
+    book_id = c.fetchone()
+    book_id = book_id[0]
+    #find book data associated w book_id
+    out = get_bookinfo(book_id)
+    return out
 
 
 # =============== STRING HELPER FUNCTIONS ===============
@@ -135,4 +143,5 @@ init_tables()
 # update_user('58689492321','bobama','barack@gmail.com','jlfkeskdldfj')
 # print(get_token('3000000001'))
 # print(get_userinfo(58689492321))
-searchfor_book("the hobbit")
+info = searchfor_book("the little prince")
+print(info)

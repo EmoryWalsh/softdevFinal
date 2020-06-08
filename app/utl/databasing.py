@@ -8,7 +8,7 @@ import os
 DIR = os.path.dirname(__file__) or '.'
 DIR += '/'
 
-DB_FILENAME=DIR+'../saucer.db'
+DB_FILENAME=DIR+'../dat/saucer.db'
 
 def init_tables():
     tables = {

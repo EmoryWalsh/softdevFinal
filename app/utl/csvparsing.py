@@ -23,8 +23,15 @@ def load_csv():
         c.execute('DELETE FROM books;')
         for book_id,row in enumerate(csvreader,start=1):
             row['book_id'] = book_id
+
             c.execute('INSERT INTO books (book_id,title,cover_url,description,rating,rating_count) VALUES (:book_id, :book_title, :image_url, :book_desc, :book_rating, :book_rating_count)',row)
-            # print(row['book_authors'],row['book_rating'])
+
+            authors = row['book_authors'].split('|')
+            genres = row['book_authors'].split('|')
+            def couple_with_id(data):
+                return (book_id,data)
+            c.executemany('INSERT INTO authors (book_id,author) VALUES (?, ?)',map(couple_with_id,authors))
+            c.executemany('INSERT INTO genres (book_id,genre) VALUES (?, ?)',map(couple_with_id,authors))
     db.commit()
     db.close()
 

@@ -113,9 +113,18 @@ def get_bookinfo(book_id):
         'cover_url':bookdata[1]
         }
 
-def searchfor_book():
-    pass
+def searchfor_book(book_title):
+    """Return {title,description,rating,authors,genres,rating_count,cover_url} for a specified book_id"""
+    print("searching for: "+capitalize_title(book_title))
+    return 0
 
+
+# =============== STRING HELPER FUNCTIONS ===============
+def capitalize_title(str):
+    words = str.split(" ");
+    words = [word.capitalize() for word in words]
+    out = " ".join(words)
+    return out
 
 # =============== STARTUP FUNCTION CALLS ===============
 init_tables()
@@ -126,3 +135,4 @@ init_tables()
 # update_user('58689492321','bobama','barack@gmail.com','jlfkeskdldfj')
 # print(get_token('3000000001'))
 # print(get_userinfo(58689492321))
+searchfor_book("the hobbit")

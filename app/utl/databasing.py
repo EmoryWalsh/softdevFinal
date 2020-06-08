@@ -91,6 +91,32 @@ def get_userinfo(uid):
         return {'username':res[0],'email':res[1]}
     raise KeyError('uid not found')
 
+# =============== BOOKS/GENRES/AUTHORS DATABASE ===============
+
+def get_bookinfo(book_id):
+    """Return {title,description,rating,authors,genres,rating_count,cover_url} for a specified book_id"""
+    db = sqlite3.connect(DB_FILENAME)
+    c = db.cursor()
+    c.execute('SELECT title,cover_url,description,rating,rating_count FROM books WHERE book_id=?;',(book_id,))
+    bookdata = c.fetchone()
+    c.execute('SELECT author FROM authors WHERE book_id=?;',(book_id,))
+    authors = list(map(lambda res: res[0], c.fetchone()))
+    c.execute('SELECT genre FROM genres WHERE book_id=?;',(book_id,))
+    genres = list(map(lambda res: res[0], c.fetchone()))
+    return {
+        'title':bookdata[0],
+        'description':bookdata[2],
+        'rating':bookdata[3],
+        'authors':authors,
+        'genres':genres,
+        'rating_count':bookdata[4],
+        'cover_url':bookdata[1]
+        }
+
+def searchfor_book():
+    pass
+
+
 # =============== STARTUP FUNCTION CALLS ===============
 init_tables()
 

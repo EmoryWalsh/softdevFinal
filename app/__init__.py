@@ -54,6 +54,16 @@ def google_auth():
         # print(auth_url)
         return redirect( auth_url )
 
+@app.route("/logout")
+def logout():
+    if 'uid' in session: #checks that a user is logged into a session
+        session.pop('uid') #logs the user out of the session
+        flash("You have been logged out.")
+        return redirect(url_for('home'))
+
+    flash("You are already logged out.")
+    return redirect(url_for('home'))
+
 
 if __name__ == '__main__':
     app.debug = True

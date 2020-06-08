@@ -18,6 +18,11 @@
     		color:#010b13;
     		background-color:white;
     	}
+      .alert {
+        padding-top: 15px;
+    		color:#f5f3ef;
+    		background-color:#100c08;
+      }
       {% block style %}
       {% endblock %}
     </style>
@@ -33,6 +38,7 @@
     </head>
 
     <body style="background-color:#f4f0ec;">
+
       <font face="Bedrock">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
           <img src="/static/img/logo.jpg" width="45" height="45" alt="logo" style="padding:4px;">
@@ -44,12 +50,20 @@
               <div class="navbar-nav">
                 <a class="nav-item nav-link" href={{ url_for('home') }}>Home</a>
                 <a class="nav-item nav-link " href={{ url_for('myshelves') }}>My Bookshelves</a>
-                <a class="nav-item nav-link" href={{ url_for('bookfinder') }}>Graphs</a>
+                <a class="nav-item nav-link" href={{ url_for('bookfinder') }}>Bookfinder</a>
                 <a class="nav-item nav-link" href={{ url_for('help') }}>Help</a>
-				<a class="nav-item nav-link" href={{ url_for('google_auth') }}>Login</a>
+				        <a class="nav-item nav-link" href={{ url_for('google_auth') }}>Login</a>
+                <a class="nav-item nav-link" href={{ url_for('logout') }}>Log Out</a>
               </div>
             </div>
           </nav>
+
+          {% set msgs = get_flashed_messages() %}
+          {% for each in msgs %}
+            <br><div class="container text-center border rounded alert">
+              <h4> {{ each }} </h4>
+            </div>
+          {% endfor %}
 
           <br>
       		<div class="container text-center border rounded title">

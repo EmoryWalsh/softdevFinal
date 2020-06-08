@@ -4,6 +4,9 @@ app/keys.json
 # database file
 *.db
 
+# CSV files
+*.csv
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

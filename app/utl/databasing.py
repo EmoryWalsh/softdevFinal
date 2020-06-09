@@ -121,10 +121,16 @@ def searchfor_book(book_title):
     #find book_id associated w book_title (use first instance)
     c.execute('SELECT book_id FROM books WHERE title=? LIMIT 1;', (book_title,))
     book_id = c.fetchone()
-    book_id = book_id[0]
-    #find book data associated w book_id
-    out = get_bookinfo(book_id)
-    return out
+    if (book_id):
+        book_id = book_id[0]
+        #find book data associated w book_id
+        out = get_bookinfo(book_id)
+        return out
+    print("Book not found")
+    return False
+
+def get_genres():
+    """Returns list of genres in book_data.csv"""
 
 
 # =============== STRING HELPER FUNCTIONS ===============
@@ -143,5 +149,5 @@ init_tables()
 # update_user('58689492321','bobama','barack@gmail.com','jlfkeskdldfj')
 # print(get_token('3000000001'))
 # print(get_userinfo(58689492321))
-info = searchfor_book("the little prince")
+info = searchfor_book("tasd;lfkje")
 print(info)

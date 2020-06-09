@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Bookfinder{% endblock %}
+
+{% block pgtitle %}Bookfinder{% endblock%}
+
+{% block content %}
+<div style="padding:20px">
+  <form>
+    <div class="row" style="padding-bottom:10px">
+      <div class="col-sm">
+        <select class="form-control">
+          <option>Default select</option>
+        </select>
+      </div>
+      <div class="col-sm">
+        <input type="text" class="form-control" placeholder="Min Page Length">
+      </div>
+      <div class="col-sm">
+        <input type="text" class="form-control" placeholder="Max Page Length">
+      </div>
+    </div>
+    <button class="btn btn-dark" type="submit">Search</button>
+  </form>
+</div>
+{% endblock %}

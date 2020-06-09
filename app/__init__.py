@@ -22,11 +22,13 @@ def home():
 def myshelves():
     return render_template("myshelves.html")
 
-@app.route('/bookfinder', methods=["POST"])
+@app.route('/bookfinder', methods=["GET","POST"])
 def bookfinder():
     genre = request.form.get("genre")
     min = request.form.get("min")
     max = request.form.get("max")
+
+    #flash([genre, min, max])
 
     return render_template("bookfinder.html")
 

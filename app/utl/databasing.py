@@ -111,6 +111,7 @@ def get_bookinfo(book_id):
     for genre in genres:
         genre.replace("['", "" )
         genre.replace("']", "")
+        #print(genre)
     return {
         'title':bookdata[0],
         'description':bookdata[2],

@@ -18,14 +18,10 @@
     </div>
   {% endfor %}
 </div>
-<div>
-  <h5> Create New Bookshelf: </h5>
-  <form action="{{ url_for('shelf', shelf_id = 2) }}" method = "post" id="newShelf">
-    Name:        <input type="text" id="shelfName">
-    <br>
-    Description: <textarea name="shelfDesc" rows="3" cols="50"></textarea>
-    <br>
-    <button type="submit" class="btn btn-primary mb-2">Submit</button>
+
+<div style="padding:20px">
+  <form action="/newshelf" method="post">
+    <button class="btn btn-dark" type="submit">Create New Bookshelf</button>
   </form>
 </div>
 

@@ -5,8 +5,8 @@
 {% block pgtitle %}My Bookshelves{% endblock%}
 
 {% block content %}
-<<<<<<< HEAD
 <div class = "shelves">
+  <!-- need to change so that it checks userid -->
   {% for shelf in bookshelves%}
     <div class="row">
       <div class="col">
@@ -19,17 +19,14 @@
   {% endfor %}
 </div>
 <div>
-  <h3> Create New Bookshelf: </h3>
-  <form action="/addShelf" method="POST">
-    <label for="newShelf" class="col-sm-2 col-form-label">Name:</label>
-    <input type="text" id="newShelf">
+  <h5> Create New Bookshelf: </h5>
+  <form action="{{ url_for('shelf', shelf_id = 2) }}" method = "post" id="newShelf">
+    Name:        <input type="text" id="shelfName">
+    <br>
+    Description: <textarea name="shelfDesc" rows="3" cols="50"></textarea>
+    <br>
     <button type="submit" class="btn btn-primary mb-2">Submit</button>
-  </div>
-=======
-<div style="padding:20px">
-  <form action="/newshelf" method="post">
-    <button class="btn btn-dark" type="submit">Create New Bookshelf</button>
   </form>
->>>>>>> 21ed9473c2f37f8f03a25938c37e4c34c0333f71
 </div>
+
 {% endblock %}

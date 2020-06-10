@@ -28,7 +28,7 @@ def init_tables():
             ['access_token','TEXT']
             ] ,
         'bookshelves' : [
-            ['shelf_id','INTEGER PRIMARY KEY'],
+            ['shelf_id','INTEGER PRIMARY KEY AUTOINCREMENT'],
             ['uid','TEXT'],
             ['title','TEXT'],
             ['description','TEXT']
@@ -159,18 +159,21 @@ def book_finder(genre, min_pg, max_pg):
     print(str(len(out))+" books found.")
     out = [get_bookinfo(id) for id in out]
     #print(out[0:2])
-    return [out, len(out)] 
+    return [out, len(out)]
 
 def add_shelf(uid, name, descr):
     db = sqlite3.connect(DB_FILENAME)
     c = db.cursor()
     c.execute("INSERT INTO bookshelves (uid, title, description) VALUES (?, ?, ?);", (uid, name, descr))
+    db.commit()
+    db.close()
 
 def add_book(shelfid, bookid):
     db = sqlite3.connect(DB_FILENAME)
     c = db.cursor()
     c.execute("INSERT INTO shelfbooks (book_id, shelf_id) VALUES (?, ?);", (bookid, shelfid))
-
+    db.commit()
+    db.close()
 
 # =============== STRING HELPER FUNCTIONS ===============
 def capitalize_title(str):

@@ -19,16 +19,9 @@ def home():
 
 @app.route('/myshelves', methods=["GET","POST"])
 def myshelves():
-    return redirect(url_for("userShelves"))
-
-@app.route('/shelves', methods=["GET","POST"])
-def userShelves():
     userid = session['uid']
     collection = db.get_my_shelves(userid)
-    return render_template(
-        "myshelves.html",
-        userid = userid,
-        collection = collection)
+    return render_template("myshelves.html", userid = userid, collection = collection)
 
 @app.route('/newshelf', methods=["GET","POST"])
 def newshelf():

@@ -46,6 +46,19 @@ def bookfinder():
         return render_template("bookfinder.html", genres=genres, num=num, books=books)
     return render_template("bookfinder.html", genres=genres)
 
+@app.route('/book/<title>')
+def bookdata(title):
+    data = db.searchfor_book(title)
+    title = data['title']
+    description = data['description']
+    rating = data['rating']
+    authors = data['authors']
+    genres = data['genres']
+    pages = data['pages']
+    url = data['cover_url']
+    return render_template("book.html", title=title, description=description, rating=rating, authors=authors, genres=genres, pages=pages, url=url)
+    #return render_template()
+
 @app.route('/help')
 def help():
     return render_template("help.html")

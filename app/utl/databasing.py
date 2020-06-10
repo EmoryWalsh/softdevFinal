@@ -102,9 +102,15 @@ def get_bookinfo(book_id):
     bookdata = c.fetchone()
     #print(bookdata)
     c.execute('SELECT author FROM authors WHERE book_id=?;',(book_id,))
-    authors = list(map(lambda res: res[0], c.fetchone()))
+    authors = list(map(lambda res: res, c.fetchone()))
+    for authors in authors:
+        authors.replace("['", "" )
+        authors.replace("']", "")
     c.execute('SELECT genre FROM genres WHERE book_id=?;',(book_id,))
-    genres = list(map(lambda res: res[0], c.fetchone()))
+    genres = list(map(lambda res: res, c.fetchone()))
+    for genre in genres:
+        genre.replace("['", "" )
+        genre.replace("']", "")
     return {
         'title':bookdata[0],
         'description':bookdata[2],

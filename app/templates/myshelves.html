@@ -7,7 +7,7 @@
 {% block content %}
 <div class = "shelves">
   <!-- need to change so that it checks userid -->
-  {% for shelf in bookshelves%}
+  {% for shelf in collection %}
     <div class="row">
       <div class="col">
         <a href="{{ shelf.title }}"> {{ shelf.title }} </a>

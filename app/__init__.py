@@ -19,17 +19,17 @@ def home():
 
 @app.route('/myshelves', methods=["GET","POST"])
 def myshelves():
-    url_for("userShelves",userid = session['uid'])
+    return redirect(url_for("userShelves"))
 
-<<<<<<< HEAD
-@app.route('/<userid>/shelves', methods=["GET","POST"])
-def userShelves(userid):
+@app.route('/shelves', methods=["GET","POST"])
+def userShelves():
+    userid = 2
     collection = db.get_my_shelves(userid)
     return render_template(
         "myshelves.html",
         userid = userid,
         collection = collection)
-=======
+
 @app.route('/newshelf', methods=["GET","POST"])
 def newshelf():
     if(request.form):
@@ -38,7 +38,6 @@ def newshelf():
         print(title)
         flash(title)
     return render_template("newshelf.html")
->>>>>>> 96bd44eabfbc57fc0edc850b750851700f371e5a
 
 @app.route('/bookfinder', methods=["GET","POST"])
 def bookfinder():

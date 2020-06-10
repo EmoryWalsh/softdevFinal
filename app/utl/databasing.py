@@ -185,10 +185,11 @@ def add_book(shelfid, bookid):
 def get_my_shelves(userid):
     db = sqlite3.connect(DB_FILENAME)
     c = db.cursor()
-    c.execute('SELECT shelf_id FROM bookshelves WHERE user_id=?;',(userid,))
+    c.execute('SELECT shelf_id, title, description FROM bookshelves WHERE uid=?;',(userid,))
     myshelves = c.fetchall()
     print(myshelves)
     return myshelves
+
 
 # =============== STRING HELPER FUNCTIONS ===============
 def capitalize_title(str):

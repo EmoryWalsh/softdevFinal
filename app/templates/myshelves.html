@@ -5,5 +5,9 @@
 {% block pgtitle %}My Bookshelves{% endblock%}
 
 {% block content %}
-this is my bookshelves
+<div style="padding:20px">
+  <form action="/newshelf" method="post">
+    <button class="btn btn-dark" type="submit">Create New Bookshelf</button>
+  </form>
+</div>
 {% endblock %}

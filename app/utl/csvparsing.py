@@ -26,7 +26,7 @@ def load_csv():
             for book_id,row in enumerate(csvreader,start=1):
                 row['book_id'] = book_id
 
-                c.execute('INSERT INTO books (book_id,title,cover_url,description,rating,rating_count) VALUES (:book_id, :book_title, :image_url, :book_desc, :book_rating, :book_rating_count)',row)
+                c.execute('INSERT INTO books (book_id,title,cover_url,description,rating,rating_count,pages) VALUES (:book_id, :book_title, :image_url, :book_desc, :book_rating, :book_rating_count, :book_pages)',row)
 
                 authors = row['book_authors'].split('|')
                 genres = row['genres'].split('|')

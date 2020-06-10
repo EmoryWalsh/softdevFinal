@@ -31,6 +31,9 @@ def bookfinder():
     #flash([genre, min, max])
     genres = db.get_genres()
 
+    #if(books != None):
+    #    return render_template("bookfinder.html", genres=genres, books=books)
+
     return render_template("bookfinder.html", genres=genres)
 
 @app.route('/help')

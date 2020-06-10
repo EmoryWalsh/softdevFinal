@@ -18,7 +18,8 @@ def init_tables():
             ['cover_url','TEXT'],
             ['description','TEXT'],
             ['rating','REAL'],
-            ['rating_count','INTEGER']
+            ['rating_count','INTEGER'],
+            ['pages', 'INTEGER']
             ] ,
         'users' : [
             ['uid','TEXT UNIQUE'], # its always gonna be a really big number but-LEAVE IT AS A STRING!
@@ -94,11 +95,12 @@ def get_userinfo(uid):
 # =============== BOOKS/GENRES/AUTHORS DATABASE ===============
 
 def get_bookinfo(book_id):
-    """Return {title,description,rating,authors,genres,rating_count,cover_url} for a specified book_id"""
+    """Return {title,description,rating,authors,genres,rating_count,cover_url,pages} for a specified book_id"""
     db = sqlite3.connect(DB_FILENAME)
     c = db.cursor()
-    c.execute('SELECT title,cover_url,description,rating,rating_count FROM books WHERE book_id=?;',(book_id,))
+    c.execute('SELECT title,cover_url,description,rating,rating_count,pages FROM books WHERE book_id=?;',(book_id,))
     bookdata = c.fetchone()
+    print(bookdata)
     c.execute('SELECT author FROM authors WHERE book_id=?;',(book_id,))
     authors = list(map(lambda res: res[0], c.fetchone()))
     c.execute('SELECT genre FROM genres WHERE book_id=?;',(book_id,))
@@ -110,11 +112,12 @@ def get_bookinfo(book_id):
         'authors':authors,
         'genres':genres,
         'rating_count':bookdata[4],
-        'cover_url':bookdata[1]
+        'cover_url':bookdata[1],
+        'pages':bookdata[5]
         }
 
 def searchfor_book(book_title):
-    """Return {title,description,rating,authors,genres,rating_count,cover_url} for a specified book_id"""
+    """Return {title,description,rating,authors,genres,rating_count,cover_url,pages} for a specified book_id"""
     book_title = capitalize_title(book_title) #book_data.csv titles are uppercase
     db = sqlite3.connect(DB_FILENAME)
     c = db.cursor()
@@ -136,7 +139,7 @@ def get_genres():
     c.execute('SELECT DISTINCT genre FROM genres')
     genres = c.fetchall()
     res = [list(genre)[0].replace("'", "") for genre in genres]
-    print("The converted list of list : " + str(res))
+    #print("The converted list of list : " + str(res))
     return res
 
 # =============== STRING HELPER FUNCTIONS ===============
@@ -155,6 +158,6 @@ init_tables()
 # update_user('58689492321','bobama','barack@gmail.com','jlfkeskdldfj')
 # print(get_token('3000000001'))
 # print(get_userinfo(58689492321))
-info = searchfor_book("tasd;lfkje")
+info = searchfor_book("Disgrace")
 print(info)
 get_genres()

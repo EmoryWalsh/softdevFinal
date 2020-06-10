@@ -21,23 +21,15 @@ def home():
 def myshelves():
     return redirect(url_for("userShelves"))
 
-<<<<<<< HEAD
 @app.route('/shelves', methods=["GET","POST"])
 def userShelves():
-    userid = 2
-=======
-@app.route('/<userid>/shelves', methods=["GET","POST"])
-def userShelves(userid):
->>>>>>> 72cff36b0b684e0c45c228d931baf0d0314e2319
+    userid = session['uid']
     collection = db.get_my_shelves(userid)
     return render_template(
         "myshelves.html",
         userid = userid,
         collection = collection)
-<<<<<<< HEAD
 
-=======
->>>>>>> 72cff36b0b684e0c45c228d931baf0d0314e2319
 @app.route('/newshelf', methods=["GET","POST"])
 def newshelf():
     if(request.form):

@@ -13,11 +13,11 @@
 
 {% block content %}
 <div style="padding:20px">
-  <form action="" method="post">
+  <form action="/bookfinder" method="post">
     <div class="row" style="padding-bottom:10px">
       <div class="col-sm">
         <div class="form-group">
-          <select class="form-control" id="genre">
+          <select class="form-control" id="genre" name="genre">
             <option value="" selected disabled>Tags</option>
             {% for genre in genres%}
               <option>{{ genre }}</option>
@@ -26,13 +26,24 @@
         </div>
       </div>
       <div class="col-sm">
-        <input type="text" name="min" class="form-control" placeholder="Min Page Length">
+        <input type="number" name="min" class="form-control" placeholder="Min Page Length" required>
       </div>
       <div class="col-sm">
-        <input type="text" name="max" class="form-control" placeholder="Max Page Length">
+        <input type="number" name="max" class="form-control" placeholder="Max Page Length" required>
       </div>
     </div>
     <button class="btn btn-dark" type="submit">Search</button>
   </form>
 </div>
+
+{% if books %}
+  <h3>{{books|length}} books found.</h3>
+  {% for book in books %}
+    <p>{{book.title}} by {{book.authors}}</p>
+    <br>
+  {% endfor %}
+
+
+{% endif %}
+
 {% endblock %}

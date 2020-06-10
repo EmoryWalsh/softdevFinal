@@ -26,3 +26,4 @@ emoryW -- 2020-06-09
 - Added a form for bookfinder
 - Fixed genres table to show genres not authors
 - Added pages to book db table
+- Created a page for each book accessible from bookfinder

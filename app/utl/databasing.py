@@ -111,6 +111,7 @@ def get_bookinfo(book_id):
     for genre in genres:
         genre.replace("['", "" )
         genre.replace("']", "")
+        #print(genre)
     return {
         'title':bookdata[0],
         'description':bookdata[2],
@@ -124,7 +125,7 @@ def get_bookinfo(book_id):
 
 def searchfor_book(book_title):
     """Return {title,description,rating,authors,genres,rating_count,cover_url,pages} for a specified book_id"""
-    book_title = capitalize_title(book_title) #book_data.csv titles are uppercase
+    book_title = book_title #book_data.csv titles are uppercase
     db = sqlite3.connect(DB_FILENAME)
     c = db.cursor()
     #find book_id associated w book_title (use first instance)

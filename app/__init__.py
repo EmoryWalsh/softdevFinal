@@ -21,15 +21,23 @@ def home():
 def myshelves():
     return redirect(url_for("userShelves"))
 
+<<<<<<< HEAD
 @app.route('/shelves', methods=["GET","POST"])
 def userShelves():
     userid = 2
+=======
+@app.route('/<userid>/shelves', methods=["GET","POST"])
+def userShelves(userid):
+>>>>>>> 72cff36b0b684e0c45c228d931baf0d0314e2319
     collection = db.get_my_shelves(userid)
     return render_template(
         "myshelves.html",
         userid = userid,
         collection = collection)
+<<<<<<< HEAD
 
+=======
+>>>>>>> 72cff36b0b684e0c45c228d931baf0d0314e2319
 @app.route('/newshelf', methods=["GET","POST"])
 def newshelf():
     if(request.form):
@@ -54,6 +62,23 @@ def bookfinder():
         #print(books)
         return render_template("bookfinder.html", genres=genres, num=num, books=books)
     return render_template("bookfinder.html", genres=genres)
+
+@app.route('/book/<title>')
+def bookdata(title):
+    print(title)
+    data = db.searchfor_book(title)
+    print("data")
+    print(data)
+    print(data['title'])
+    book_title = data['title']
+    description = data['description']
+    rating = data['rating']
+    authors = data['authors']
+    genres = data['genres']
+    pages = data['pages']
+    url = data['cover_url']
+    return render_template("book.html", title=book_title, description=description, rating=rating, authors=authors, genres=genres, pages=pages, url=url)
+    return render_template("book.html")
 
 @app.route('/help')
 def help():

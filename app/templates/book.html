@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block pgtitle %}{{ title }} by {{ authors }}{% endblock%}
+
+{% block style %}
+
+{% endblock %}
+
+{% block content %}
+<div style="padding:30px;font-size:34px;">
+  <center><p><img src={{ url }} height="500px" width="400px"><p>
+  <p><i><strong>{{ title }}</strong></i></p>
+  <p>by {{ authors }}</p></center>
+</div>
+<div style="padding:30px;font-size:20px;"">
+  <strong><p>Description:</p></strong>
+  <p>{{ description }}</p>
+  <br>
+  <p><strong>Rating:</strong> {{ rating }}</p>
+  <br>
+  <p><strong>Genres:</strong>
+    {% for genre in genres %}
+      {{ genre }}
+    {% endfor %}</p>
+  <br>
+  <p><strong>Page Count:</strong> {{ pages }}</p>
+  <br>
+
+{% endblock %}

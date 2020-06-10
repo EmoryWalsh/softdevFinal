@@ -5,5 +5,28 @@
 {% block pgtitle %}Create A New Bookshelf{% endblock%}
 
 {% block content %}
-
+<div style="padding:20px">
+  <form action="/myshelves" method="post">
+    <div class="form-group">
+      <label for="shelfName">Shelf Name</label>
+      <input class="form-control" id="shelfName" placeholder="Summer Reads">
+    </div>
+    <div class="form-group">
+      <label for="shelfDescription">Shelf Description</label>
+      <textarea class="form-control" id="shelfDescription" rows="3"></textarea>
+    </div>
+    <div class="form-group">
+      <div class="row" style="padding:0px">
+        <div class="col-lg">
+          <label for="addBook">Add Book</label>
+          <input class="form-control" id="addBook" name="addBook" placeholder="Catch-22">
+        </div>
+        <div class="col-sm" style="padding-top:30px;">
+          <button class="btn btn-outline-dark" type="button" formmethod="get|post" formaction="/newshelf">Search</button>
+        </div>
+      </div>
+    </div>
+    <br>
+    <button class="btn btn-dark btn-lg btn-block">Submit</button>
+  </form>
 {% endblock %}

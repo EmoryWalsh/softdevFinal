@@ -21,6 +21,7 @@ def home():
 def myshelves():
     url_for("userShelves",userid = session['uid'])
 
+<<<<<<< HEAD
 @app.route('/<userid>/shelves', methods=["GET","POST"])
 def userShelves(userid):
     collection = db.get_my_shelves(userid)
@@ -28,20 +29,26 @@ def userShelves(userid):
         "myshelves.html",
         userid = userid,
         collection = collection)
+=======
+@app.route('/newshelf', methods=["GET","POST"])
+def newshelf():
+    if(request.form):
+        title = request.form.get('addBook')
+        print("HIS")
+        print(title)
+        flash(title)
+    return render_template("newshelf.html")
+>>>>>>> 96bd44eabfbc57fc0edc850b750851700f371e5a
 
 @app.route('/bookfinder', methods=["GET","POST"])
 def bookfinder():
     genres = db.get_genres()
     if (request.form):
-        print(request.form)
+        #print(request.form)
         genre = request.form.get("genre")
         min = request.form.get("min")
         max = request.form.get("max")
 
-        #print('GENRE: ', genre)
-        #print('type: ', type(min))
-
-        #flash([genre, min, max])
         result = db.book_finder(genre, int(min), int(max))
         books = result[0]
         num = int(result[1])

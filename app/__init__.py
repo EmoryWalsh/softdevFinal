@@ -17,27 +17,28 @@ app.secret_key = os.urandom(32)
 def home():
     return render_template("home.html")
 
-@app.route('/myshelves')
+@app.route('/myshelves', methods=["GET","POST"])
 def myshelves():
     return render_template("myshelves.html")
 
 @app.route('/newshelf', methods=["GET","POST"])
 def newshelf():
+    if(request.form):
+        title = request.form.get('addBook')
+        print("HIS")
+        print(title)
+        flash(title)
     return render_template("newshelf.html")
 
 @app.route('/bookfinder', methods=["GET","POST"])
 def bookfinder():
     genres = db.get_genres()
     if (request.form):
-        print(request.form)
+        #print(request.form)
         genre = request.form.get("genre")
         min = request.form.get("min")
         max = request.form.get("max")
 
-        #print('GENRE: ', genre)
-        #print('type: ', type(min))
-
-        #flash([genre, min, max])
         result = db.book_finder(genre, int(min), int(max))
         books = result[0]
         num = int(result[1])

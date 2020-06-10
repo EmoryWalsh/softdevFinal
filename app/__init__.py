@@ -81,6 +81,19 @@ def logout():
     flash("You are already logged out.")
     return redirect(url_for('home'))
 
+@app.route("/addShelf", methods=["POST"])
+def addShelf():
+    # forgot how to access userid
+    userid = "1"
+    name = request.form.get("name")
+    description = request.form.get("description")
+    db.add_shelf(userid, name, description)
+    # may need to create template for adding a shelf and I don't know how to add access the sheelf id
+    return render_template("shelf.html", shelf_id = 0)
+
+@app.route("/shelf/<shelf_id>", methods=["POST"])
+def shelf(shelf_id):
+    render_template("shelf.html")
 
 if __name__ == '__main__':
     app.debug = True

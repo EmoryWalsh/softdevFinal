@@ -5,5 +5,24 @@
 {% block pgtitle %}My Bookshelves{% endblock%}
 
 {% block content %}
-this is my bookshelves
+<div class = "shelves">
+  {% for shelf in bookshelves%}
+    <div class="row">
+      <div class="col">
+        <a href="{{ shelf.title }}"> {{ shelf.title }} </a>
+      </div>
+      <div class = "col">
+        <p>{{ shelf.description }}</p>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+<div>
+  <h3> Create New Bookshelf: </h3>
+  <form action="/addShelf" method="POST">
+    <label for="newShelf" class="col-sm-2 col-form-label">Name:</label>
+    <input type="text" id="newShelf">
+    <button type="submit" class="btn btn-primary mb-2">Submit</button>
+  </div>
+</div>
 {% endblock %}

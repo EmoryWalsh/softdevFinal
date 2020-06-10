@@ -161,6 +161,17 @@ def book_finder(genre, min_pg, max_pg):
     # print(out[0:2])
     return out
 
+def add_shelf(uid, name, descr):
+    db = sqlite3.connect(DB_FILENAME)
+    c = db.cursor()
+    c.execute("INSERT INTO bookshelves (uid, title, description) VALUES (?, ?, ?);", (uid, name, descr))
+
+def add_book(shelfid, bookid):
+    db = sqlite3.connect(DB_FILENAME)
+    c = db.cursor()
+    c.execute("INSERT INTO shelfbooks (book_id, shelf_id) VALUES (?, ?);", (bookid, shelfid))
+
+
 # =============== STRING HELPER FUNCTIONS ===============
 def capitalize_title(str):
     words = str.split(" ");

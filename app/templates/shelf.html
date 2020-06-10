@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block pgtitle %} {{ title }} {% endblock%}
+
+{% block style %}
+.dropdown-menu {
+  max-height: 200px;
+  overflow-y: auto;
+}
+{% endblock %}
+
+{% block content %}
+<h4> Description: {{ description }} </h4>
+<div class = "books">
+  {% for book in shelf_books %}
+    <div class="row">
+      <div class = "col">
+        <p>{{ book.title }}</p>
+      </div>
+      <div class = "col">
+        <p>{{ book.author }}</p>
+      </div>
+      <div class = "col">
+        <p>{{ book.description }}</p>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

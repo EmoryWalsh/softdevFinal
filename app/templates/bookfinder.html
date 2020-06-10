@@ -37,7 +37,7 @@
 </div>
 
 {% if books %}
-    <div style="padding:20px;">
+    <div style="padding:20px;font-size:20px;">
       <h3>{{ num }} books found.</h3>
       {% set index = 0 %}
       {% set len = (num / 3)|int %}
@@ -48,23 +48,26 @@
           <div class="col-sm justify-content-center">
             {% set index = x * 3 %}
             {% set book = books[index] %}
-            <p><img src={{book.cover_url}} height="350px" width="250px"><p>
-            <p>{{book.title}} by {{book.authors}} {{index}}</p>
+            <center><p><img src={{book.cover_url}} height="350px" width="250px"><p>
+            <p><strong>{{book.title}}</strong></p>
+            <p> by {{book.authors}}</p></center>
           </div>
           <div class="col-sm">
             {% set index = index + 1 %}
             {% set book = books[index] %}
             {% if index < num %}
-            <p><img src={{book.cover_url}} height="350px" width="250px"><p>
-              <p>{{book.title}} by {{book.authors}} {{index}}</p>
+              <center><p><img src={{book.cover_url}} height="350px" width="250px"><p>
+              <p><strong>{{book.title}}</strong></p>
+              <p> by {{book.authors}}</p></center>
             {% endif %}
           </div>
           <div class="col-sm">
             {% set index = index + 1 %}
             {% set book = books[index] %}
             {% if index < num %}
-            <p><img src={{book.cover_url}} height="350px" width="250px"><p>
-              <p>{{book.title}} by {{book.authors}} {{index}}</p>
+              <center><p><img src={{book.cover_url}} height="350px" width="250px"><p>
+              <p><strong>{{book.title}}</strong></p>
+              <p>by {{book.authors}}</p></center>
             {% endif %}
           </div>
         </div>

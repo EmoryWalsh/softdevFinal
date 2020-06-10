@@ -26,10 +26,14 @@ def myshelves():
 @app.route('/newshelf', methods=["GET","POST"])
 def newshelf():
     if(request.form):
-        title = request.form.get('addBook')
+        #title = request.form.get('addBook')
+        userid = session['uid']
+        name = request.form.get("shelfName")
+        description = request.form.get("shelfDescription")
+        db.add_shelf(userid, name, description)
         print("HIS")
-        print(title)
-        flash(title)
+        #print(title)
+        #flash(title)
     return render_template("newshelf.html")
 
 @app.route('/bookfinder', methods=["GET","POST"])

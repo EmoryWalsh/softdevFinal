@@ -100,7 +100,7 @@ def get_bookinfo(book_id):
     c = db.cursor()
     c.execute('SELECT title,cover_url,description,rating,rating_count,pages FROM books WHERE book_id=?;',(book_id,))
     bookdata = c.fetchone()
-    print(bookdata)
+    #print(bookdata)
     c.execute('SELECT author FROM authors WHERE book_id=?;',(book_id,))
     authors = list(map(lambda res: res[0], c.fetchone()))
     c.execute('SELECT genre FROM genres WHERE book_id=?;',(book_id,))
@@ -142,6 +142,25 @@ def get_genres():
     #print("The converted list of list : " + str(res))
     return res
 
+def book_finder(genre, min_pg, max_pg):
+    """Returns list of books that match input queries"""
+    db = sqlite3.connect(DB_FILENAME)
+    c = db.cursor()
+    c.execute("SELECT book_id FROM genres WHERE genre=? LIMIT 250;", (genre,))
+    book_ids = c.fetchall()
+    book_ids = [book_id[0] for book_id in book_ids]
+    #print(book_ids)
+    out = [] #output: relevant book_ids
+    for book_id in book_ids:
+        info = get_bookinfo(book_id)
+        if info["pages"] and int(info["pages"].split(" ")[0]) >= min_pg and int(info["pages"].split(" ")[0]) <= max_pg:
+            out.append(book_id)
+            #print(book_id)
+    print(str(len(out))+" books found.")
+    out = [get_bookinfo(id) for id in out]
+    # print(out[0:2])
+    return out
+
 # =============== STRING HELPER FUNCTIONS ===============
 def capitalize_title(str):
     words = str.split(" ");
@@ -158,6 +177,7 @@ init_tables()
 # update_user('58689492321','bobama','barack@gmail.com','jlfkeskdldfj')
 # print(get_token('3000000001'))
 # print(get_userinfo(58689492321))
-info = searchfor_book("Disgrace")
-print(info)
-get_genres()
+#info = searchfor_book("Disgrace")
+#print(info)
+#get_genres()
+#book_finder("Science Fiction", 300, 400)

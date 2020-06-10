@@ -22,6 +22,10 @@ def home():
 def myshelves():
     return render_template("myshelves.html")
 
+@app.route('/newshelf', methods=["GET","POST"])
+def newshelf():
+    return render_template("newshelf.html")
+
 @app.route('/bookfinder', methods=["GET","POST"])
 def bookfinder():
     genre = request.form.get("genre")

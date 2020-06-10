@@ -102,9 +102,15 @@ def get_bookinfo(book_id):
     bookdata = c.fetchone()
     #print(bookdata)
     c.execute('SELECT author FROM authors WHERE book_id=?;',(book_id,))
-    authors = list(map(lambda res: res[0], c.fetchone()))
+    authors = list(map(lambda res: res, c.fetchone()))
+    for authors in authors:
+        authors.replace("['", "" )
+        authors.replace("']", "")
     c.execute('SELECT genre FROM genres WHERE book_id=?;',(book_id,))
-    genres = list(map(lambda res: res[0], c.fetchone()))
+    genres = list(map(lambda res: res, c.fetchone()))
+    for genre in genres:
+        genre.replace("['", "" )
+        genre.replace("']", "")
     return {
         'title':bookdata[0],
         'description':bookdata[2],
@@ -148,6 +154,7 @@ def book_finder(genre, min_pg, max_pg):
     c = db.cursor()
     c.execute("SELECT book_id FROM genres WHERE genre=? LIMIT 250;", (genre,))
     book_ids = c.fetchall()
+    book_ids = [i for n, i in enumerate(book_ids) if i not in book_ids[n + 1:]]
     book_ids = [book_id[0] for book_id in book_ids]
     #print(book_ids)
     out = [] #output: relevant book_ids

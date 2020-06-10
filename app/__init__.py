@@ -13,7 +13,6 @@ from utl import databasing as db,csvparsing, google
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
 
-
 @app.route('/')
 def home():
     return render_template("home.html")
@@ -24,16 +23,23 @@ def myshelves():
 
 @app.route('/bookfinder', methods=["GET","POST"])
 def bookfinder():
-    genre = request.form.get("genre")
-    min = request.form.get("min")
-    max = request.form.get("max")
-
-    #flash([genre, min, max])
     genres = db.get_genres()
+    if (request.form):
+        print(request.form)
+        genre = request.form.get("genre")
+        min = request.form.get("min")
+        max = request.form.get("max")
 
-    #if(books != None):
-    #    return render_template("bookfinder.html", genres=genres, books=books)
+        print('GENRE: ', genre)
+        print('type: ', type(min))
 
+        #flash([genre, min, max])
+        books = db.book_finder(genre, int(min), int(max))
+
+        #if(books != None):
+        #    return render_template("bookfinder.html", genres=genres, books=books)
+
+        return render_template("bookfinder.html", genres=genres, books=books)
     return render_template("bookfinder.html", genres=genres)
 
 @app.route('/help')

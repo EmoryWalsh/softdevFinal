@@ -148,6 +148,7 @@ def book_finder(genre, min_pg, max_pg):
     c = db.cursor()
     c.execute("SELECT book_id FROM genres WHERE genre=? LIMIT 250;", (genre,))
     book_ids = c.fetchall()
+    book_ids = [i for n, i in enumerate(book_ids) if i not in book_ids[n + 1:]]
     book_ids = [book_id[0] for book_id in book_ids]
     #print(book_ids)
     out = [] #output: relevant book_ids
@@ -159,7 +160,7 @@ def book_finder(genre, min_pg, max_pg):
     print(str(len(out))+" books found.")
     out = [get_bookinfo(id) for id in out]
     #print(out[0:2])
-    return [out, len(out)] 
+    return [out, len(out)]
 
 def add_shelf(uid, name, descr):
     db = sqlite3.connect(DB_FILENAME)

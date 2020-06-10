@@ -21,11 +21,8 @@ def home():
 def myshelves():
     userid = session['uid']
     collection = db.get_my_shelves(userid)
-    return render_template("myshelves.html", userid = userid, collection = collection)
-
-@app.route('/newshelf', methods=["GET","POST"])
-def newshelf():
     if(request.form):
+        print("here")
         #title = request.form.get('addBook')
         userid = session['uid']
         name = request.form.get("shelfName")
@@ -34,6 +31,10 @@ def newshelf():
         print("HIS")
         #print(title)
         #flash(title)
+    return render_template("myshelves.html", userid = userid, collection = collection)
+
+@app.route('/newshelf', methods=["GET","POST"])
+def newshelf():
     return render_template("newshelf.html")
 
 @app.route('/bookfinder', methods=["GET","POST"])

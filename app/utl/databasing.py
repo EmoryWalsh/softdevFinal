@@ -172,6 +172,7 @@ def book_finder(genre, min_pg, max_pg):
 def add_shelf(uid, name, descr):
     db = sqlite3.connect(DB_FILENAME)
     c = db.cursor()
+    print("add shelf")
     c.execute("INSERT INTO bookshelves (uid, title, description) VALUES (?, ?, ?);", (uid, name, descr))
     db.commit()
     db.close()

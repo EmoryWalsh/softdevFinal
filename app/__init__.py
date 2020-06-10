@@ -55,16 +55,20 @@ def bookfinder():
 
 @app.route('/book/<title>')
 def bookdata(title):
+    print(title)
     data = db.searchfor_book(title)
-    title = data['title']
+    print("data")
+    print(data)
+    print(data['title'])
+    book_title = data['title']
     description = data['description']
     rating = data['rating']
     authors = data['authors']
     genres = data['genres']
     pages = data['pages']
     url = data['cover_url']
-    return render_template("book.html", title=title, description=description, rating=rating, authors=authors, genres=genres, pages=pages, url=url)
-    #return render_template()
+    return render_template("book.html", title=book_title, description=description, rating=rating, authors=authors, genres=genres, pages=pages, url=url)
+    return render_template("book.html")
 
 @app.route('/help')
 def help():

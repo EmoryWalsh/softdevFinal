@@ -21,6 +21,10 @@ def home():
 def myshelves():
     return render_template("myshelves.html")
 
+@app.route('/newshelf', methods=["GET","POST"])
+def newshelf():
+    return render_template("newshelf.html")
+
 @app.route('/bookfinder', methods=["GET","POST"])
 def bookfinder():
     genres = db.get_genres()
@@ -30,16 +34,15 @@ def bookfinder():
         min = request.form.get("min")
         max = request.form.get("max")
 
-        print('GENRE: ', genre)
-        print('type: ', type(min))
+        #print('GENRE: ', genre)
+        #print('type: ', type(min))
 
         #flash([genre, min, max])
-        books = db.book_finder(genre, int(min), int(max))
-
-        #if(books != None):
-        #    return render_template("bookfinder.html", genres=genres, books=books)
-
-        return render_template("bookfinder.html", genres=genres, books=books)
+        result = db.book_finder(genre, int(min), int(max))
+        books = result[0]
+        num = int(result[1])
+        #print(books)
+        return render_template("bookfinder.html", genres=genres, num=num, books=books)
     return render_template("bookfinder.html", genres=genres)
 
 @app.route('/help')

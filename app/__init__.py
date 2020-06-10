@@ -17,13 +17,17 @@ app.secret_key = os.urandom(32)
 def home():
     return render_template("home.html")
 
-@app.route('/myshelves')
+@app.route('/myshelves', methods=["GET","POST"])
 def myshelves():
-    return render_template("myshelves.html")
+    url_for("userShelves",userid = session['uid'])
 
-@app.route('/newshelf', methods=["GET","POST"])
-def newshelf():
-    return render_template("newshelf.html")
+@app.route('/<userid>/shelves', methods=["GET","POST"])
+def userShelves(userid):
+    collection = db.get_my_shelves(userid)
+    return render_template(
+        "myshelves.html",
+        userid = userid,
+        collection = collection)
 
 @app.route('/bookfinder', methods=["GET","POST"])
 def bookfinder():
@@ -84,7 +88,7 @@ def logout():
     flash("You are already logged out.")
     return redirect(url_for('home'))
 
-@app.route("/<shelf_id>/shelf", methods=["POST"])
+@app.route("/<shelf_id>/shelf", methods=["GET","POST"])
 def shelf(shelf_id):
     # idk how to access uid
     userid = session['uid']

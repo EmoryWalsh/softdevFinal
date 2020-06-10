@@ -27,8 +27,9 @@ def myshelves():
         userid = session['uid']
         name = request.form.get("shelfName")
         description = request.form.get("shelfDescription")
+        print(userid)
+        print(name)
         db.add_shelf(userid, name, description)
-        print("HIS")
         #print(title)
         #flash(title)
     return render_template("myshelves.html", userid = userid, collection = collection)
@@ -111,13 +112,14 @@ def logout():
 
 @app.route("/<shelf_id>/shelf", methods=["GET","POST"])
 def shelf(shelf_id):
-    # idk how to access uid
-    userid = session['uid']
-    name = request.form.get("shelfName")
-    description = request.form.get("shelfDesc")
-    db.add_shelf(userid, name, description)
-    # may need to create template for adding a shelf and I don't know how to add access the shelf id
-    return render_template("shelf.html")
+    shelf_info = db.get_shelf_info(shelf_id)
+    name = shelf_info[0][0]
+    description = shelf_info[0][1]
+    mybooks = db.get_shelf_books(shelf_id)
+    print(mybooks)
+    bookdata = [get_bookinfo(id) for id in mybooks[0]]
+    print(bookdata)
+    return render_template("shelf.html", name=name, description=description, books=bookdata)
 
 if __name__ == '__main__':
     app.debug = True

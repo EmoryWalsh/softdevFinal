@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
-{% block title %} {{ title }} {% endblock %}
+{% block title %} {{ name }} {% endblock %}
 
-{% block pgtitle %} {{ title }} {% endblock%}
+{% block pgtitle %} {{ name }} {% endblock %}
 
 {% block style %}
 .dropdown-menu {
@@ -13,19 +13,53 @@
 
 {% block content %}
 <h6> Description: {{ description }} </h6>
-<div class = "books">
-  {% for book in shelf_books %}
-    <div class="row">
-      <div class = "col">
-        <p>{{ book.title }}</p>
-      </div>
-      <div class = "col">
-        <p>{{ book.author }}</p>
-      </div>
-      <div class = "col">
-        <p>{{ book.description }}</p>
-      </div>
+
+{% if books %}
+    <div style="padding:20px;font-size:20px;">
+      {% set index = 0 %}
+      {% set len = (num / 3)|int %}
+
+
+      {% for x in range(0, len) %}
+        <div class="row" style="padding-bottom:10px">
+          <div class="col-sm justify-content-center">
+            {% set index = x * 3 %}
+            {% set book = books[index] %}
+            <center>
+              <p><img src={{book.cover_url}} height="350px" width="250px"><p>
+              <p><strong><a href="/book/{{book.title}}">{{book.title}}</a></strong></p>
+              <p> by {{book.authors}}</p>
+            </center>
+          </div>
+          <div class="col-sm">
+            {% set index = index + 1 %}
+            {% set book = books[index] %}
+            {% if index < num %}
+            <center>
+              <p><img src={{book.cover_url}} height="350px" width="250px"><p>
+              <p><strong><a href="/book/{{book.title}}">{{book.title}}</a></strong></p>
+              <p> by {{book.authors}}</p>
+            </center>
+            {% endif %}
+          </div>
+          <div class="col-sm">
+            {% set index = index + 1 %}
+            {% set book = books[index] %}
+            {% if index < num %}
+              <center>
+                <p><img src={{book.cover_url}} height="350px" width="250px"><p>
+                <p><strong><a href="/book/{{book.title}}">{{book.title}}</a></strong></p>
+                <p>by {{book.authors}}</p>
+              </center>
+            {% endif %}
+          </div>
+        </div>
+
+      <br>
+      {% endfor %}
     </div>
-  {% endfor %}
-</div>
+
+
+{% endif %}
+
 {% endblock %}

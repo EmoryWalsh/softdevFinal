@@ -172,7 +172,6 @@ def book_finder(genre, min_pg, max_pg):
 def add_shelf(uid, name, descr):
     db = sqlite3.connect(DB_FILENAME)
     c = db.cursor()
-    print("add shelf")
     c.execute("INSERT INTO bookshelves (uid, title, description) VALUES (?, ?, ?);", (uid, name, descr))
     db.commit()
     db.close()
@@ -189,9 +188,21 @@ def get_my_shelves(userid):
     c = db.cursor()
     c.execute('SELECT shelf_id, title, description FROM bookshelves WHERE uid=?;',(userid,))
     myshelves = c.fetchall()
-    print(myshelves)
     return myshelves
 
+def get_shelf_info(shelf_id):
+    db = sqlite3.connect(DB_FILENAME)
+    c = db.cursor()
+    c.execute('SELECT title, description FROM bookshelves WHERE shelf_id=?;',(shelf_id,))
+    shelfinfo = c.fetchall()
+    return shelfinfo
+
+def get_shelf_books(shelf_id):
+    db = sqlite3.connect(DB_FILENAME)
+    c = db.cursor()
+    c.execute('SELECT book_id FROM shelfbooks WHERE shelf_id=?;',(shelf_id,))
+    mybooks = c.fetchall()
+    return mybooks
 
 # =============== STRING HELPER FUNCTIONS ===============
 def capitalize_title(str):

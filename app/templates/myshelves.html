@@ -10,10 +10,10 @@
   {% for shelf in collection %}
     <div class="row">
       <div class="col">
-        <a href="{{ shelf.title }}"> {{ shelf.title }} </a>
+        <a href="{{ url_for('shelf', shelf_id=shelf[0]) }}"> {{ shelf[1] }} </a>
       </div>
       <div class = "col">
-        <p>{{ shelf.description }}</p>
+        <p>{{ shelf[2] }}</p>
       </div>
     </div>
   {% endfor %}

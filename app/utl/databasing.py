@@ -158,8 +158,8 @@ def book_finder(genre, min_pg, max_pg):
             #print(book_id)
     print(str(len(out))+" books found.")
     out = [get_bookinfo(id) for id in out]
-    # print(out[0:2])
-    return out
+    #print(out[0:2])
+    return [out, len(out)] 
 
 # =============== STRING HELPER FUNCTIONS ===============
 def capitalize_title(str):
@@ -168,6 +168,23 @@ def capitalize_title(str):
     out = " ".join(words)
     return out
 
+# =============== LIST HELPER FUNCTIONS ===============
+def list_primer(list): #turns a list into a list lists with 3 elements
+    new = []
+    idx_old = 0
+    idx_new = 0
+    while(idx_old < len(list)):
+        new.append([])
+        new[idx_new].append(list[idx_old])
+        idx_old += 1
+        if(idx_old < len(list)):
+            new[idx_new].append(list[idx_old])
+        idx_old += 1
+        if(idx_old < len(list)):
+            new[idx_new].append(list[idx_old])
+        idx_old += 1
+        idx_new += 1
+    return new
 # =============== STARTUP FUNCTION CALLS ===============
 init_tables()
 
@@ -181,3 +198,4 @@ init_tables()
 #print(info)
 #get_genres()
 #book_finder("Science Fiction", 300, 400)
+#print(list_primer([3, 2, 6, 87, 2]))

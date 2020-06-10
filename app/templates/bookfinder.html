@@ -37,11 +37,41 @@
 </div>
 
 {% if books %}
-  <h3>{{books|length}} books found.</h3>
-  {% for book in books %}
-    <p>{{book.title}} by {{book.authors}}</p>
-    <br>
-  {% endfor %}
+    <div style="padding:20px;">
+      <h3>{{ num }} books found.</h3>
+      {% set index = 0 %}
+      {% set len = (num / 3)|int %}
+
+
+      {% for x in range(0, len) %}
+        <div class="row" style="padding-bottom:10px">
+          <div class="col-sm">
+            {% set index = x * 3 %}
+            {% set book = books[index] %}
+            <p><a href={{book.cover_url}}></a><p>
+            <p>{{book.title}} by {{book.authors}}</p>
+          </div>
+          <div class="col-sm">
+            {% set index = index + 1 %}
+            {% set book = books[index] %}
+            {% if index < num %}
+              <p><a href={{book.cover_url}}></a><p>
+              <p>{{book.title}} by {{book.authors}}</p>
+            {% endif %}
+          </div>
+          <div class="col-sm">
+            {% set index = index + 1 %}
+            {% set book = books[index] %}
+            {% if index < num %}
+              <p><a href={{book.cover_url}}></a><p>
+              <p>{{book.title}} by {{book.authors}}</p>
+            {% endif %}
+          </div>
+        </div>
+
+      <br>
+      {% endfor %}
+    </div>
 
 
 {% endif %}

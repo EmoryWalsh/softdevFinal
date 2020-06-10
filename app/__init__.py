@@ -13,7 +13,6 @@ from utl import databasing as db,csvparsing, google
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
 
-loggedIn = False
 
 @app.route('/')
 def home():
@@ -30,6 +29,7 @@ def bookfinder():
     max = request.form.get("max")
 
     #flash([genre, min, max])
+    genres = get_genres()
 
     return render_template("bookfinder.html")
 

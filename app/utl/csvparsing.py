@@ -22,6 +22,7 @@ def load_csv():
             # c.executemany('INSERT INTO books (title,cover_url,description,rating,rating_count) VALUES (:book_title, :image_url, :book_desc, :book_rating, :book_rating_count)',csvreader)
             # the above code would work, but it wouldn't be possible to get the book_ids as they're generated!
             c.execute('DELETE FROM books;')
+            c.execute('DELETE FROM genres;')
             for book_id,row in enumerate(csvreader,start=1):
                 row['book_id'] = book_id
 

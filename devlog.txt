@@ -20,3 +20,7 @@ kiranV -- 2020-06-08 17:37
 - Wrote code to parse CSV files with book data and place it into books, authors, and genres tables of the sqlite database
   - NOTE: at the moment there's a really rudimentary system in place for determining whether book data should be updated-should change that at some point.
 - Wrote databasing method to retrieve all book data based on book id.
+
+emoryW -- 2020-06-09
+- Made flashed messages appear to users
+- Fixed genres table to show genres not authors

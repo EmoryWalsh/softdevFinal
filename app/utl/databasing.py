@@ -130,8 +130,13 @@ def searchfor_book(book_title):
     return False
 
 def get_genres():
-    """Returns list of genres in book_data.csv"""
-
+    """Returns list of unique genres in book_data.csv"""
+    db = sqlite3.connect(DB_FILENAME)
+    c = db.cursor()
+    c.execute('SELECT DISTINCT genre FROM genres')
+    genres = c.fetchall()
+    #print(genres)
+    return genres
 
 # =============== STRING HELPER FUNCTIONS ===============
 def capitalize_title(str):
@@ -151,3 +156,4 @@ init_tables()
 # print(get_userinfo(58689492321))
 info = searchfor_book("tasd;lfkje")
 print(info)
+get_genres()

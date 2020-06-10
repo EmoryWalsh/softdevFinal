@@ -41,7 +41,7 @@ def bookfinder():
         result = db.book_finder(genre, int(min), int(max))
         books = result[0]
         num = int(result[1])
-        #print(books)
+        print(books)
         return render_template("bookfinder.html", genres=genres, num=num, books=books)
     return render_template("bookfinder.html", genres=genres)
 

@@ -28,11 +28,11 @@ def load_csv():
                 c.execute('INSERT INTO books (book_id,title,cover_url,description,rating,rating_count) VALUES (:book_id, :book_title, :image_url, :book_desc, :book_rating, :book_rating_count)',row)
 
                 authors = row['book_authors'].split('|')
-                genres = row['book_authors'].split('|')
+                genres = row['genres'].split('|')
                 def couple_with_id(data):
                     return (book_id,data)
                 c.executemany('INSERT INTO authors (book_id,author) VALUES (?, ?)',map(couple_with_id,authors))
-                c.executemany('INSERT INTO genres (book_id,genre) VALUES (?, ?)',map(couple_with_id,authors))
+                c.executemany('INSERT INTO genres (book_id,genre) VALUES (?, ?)',map(couple_with_id,genres))
     except FileNotFoundError:
         print('CSV file not found, leaving book database as is')
 

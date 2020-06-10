@@ -19,10 +19,9 @@
         <div class="form-group">
           <select class="form-control" id="genre">
             <option value="" selected disabled>Genre</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
+            {% for genre in genres%}
+              <option>{{ genre }}</option>
+            {% endfor %}
           </select>
         </div>
       </div>

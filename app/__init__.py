@@ -29,9 +29,9 @@ def bookfinder():
     max = request.form.get("max")
 
     #flash([genre, min, max])
-    genres = get_genres()
+    genres = db.get_genres()
 
-    return render_template("bookfinder.html")
+    return render_template("bookfinder.html", genres=genres)
 
 @app.route('/help')
 def help():

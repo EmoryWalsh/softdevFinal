@@ -135,8 +135,9 @@ def get_genres():
     c = db.cursor()
     c.execute('SELECT DISTINCT genre FROM genres')
     genres = c.fetchall()
-    #print(genres)
-    return genres
+    res = [list(genre)[0].replace("'", "") for genre in genres]
+    print("The converted list of list : " + str(res))
+    return res
 
 # =============== STRING HELPER FUNCTIONS ===============
 def capitalize_title(str):

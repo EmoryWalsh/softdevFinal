@@ -2,7 +2,11 @@
 
 {% block title %} {{ name }} {% endblock %}
 
-{% block pgtitle %} {{ name }} {% endblock %}
+{% block pgtitle %}
+  {{ name }}
+  <h5>{{ description }} </h5>
+
+{% endblock %}
 
 {% block style %}
 .dropdown-menu {
@@ -12,7 +16,28 @@
 {% endblock %}
 
 {% block content %}
-<h6> Description: {{ description }} </h6>
+
+<div style="padding:20px;"
+  <form method="post">
+    <div class="form-group">
+      <div class="row">
+        <div class="col-lg">
+          <div class="form-group">
+            <label for="addBook">Add Book</label>
+            <input class="form-control" id="addBook" name="addBook" placeholder="Catch-22">
+          </div>
+        </div>
+        <div class="col-sm" style="padding-top:30px;">
+          <button class="btn btn-outline-dark" type="submit">Search</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+{% if maybeBook %}
+maybe
+{% endif %}
 
 {% if books %}
     <div style="padding:20px;font-size:20px;">

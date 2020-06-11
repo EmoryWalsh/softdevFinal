@@ -4,25 +4,52 @@
 
 {% block pgtitle %}My Bookshelves{% endblock%}
 
-{% block content %}
-<div class="shelves">
-  <!-- need to change so that it checks userid -->
-  {% for shelf in collection %}
-    <div class="row">
-      <div class="col">
-        <a href="{{ url_for('shelf', shelf_id=shelf[0]) }}"> {{ shelf[1] }} </a>
-      </div>
-      <div class = "col">
-        <p>{{ shelf[2] }}</p>
-      </div>
-    </div>
-  {% endfor %}
-</div>
-
 <div style="padding:20px">
   <form action="/newshelf" method="post">
     <button class="btn btn-dark" type="submit">Create New Bookshelf</button>
   </form>
+</div>
+
+{% block content %}
+<div class="shelves" style="padding:20px;">
+  <!-- need to change so that it checks userid -->
+  {% set index = 0 %}
+  {% set len = (collection|length / 3)|int %}
+
+  {% for x in range(0, len) %}
+    <div class="row">
+      <div class="col-sm justify-content-center">
+        {% set index = x * 3 %}
+        {% set shelf = collection[index] %}
+        <center>
+          <p><a href="{{ url_for('shelf', shelf_id=shelf[0]) }}"> {{ shelf[1] }} </a></p>
+          <p>{{ shelf[2] }}</p>
+        </center>
+      </div>
+      <div class="col-sm justify-content-center">
+        {% set index = index + 1 %}
+        {% set shelf = collection[index] %}
+        {% if index < collection|length %}
+          {% set shelf = collection[index] %}
+          <center>
+            <p><a href="{{ url_for('shelf', shelf_id=shelf[0]) }}"> {{ shelf[1] }} </a></p>
+            <p>{{ shelf[2] }}</p>
+          </center>
+          {% endif %}
+      </div>
+      <div class="col-sm justify-content-center">
+        {% set index = index + 1 %}
+        {% set shelf = collection[index] %}
+        {% if index < collection|length %}
+          {% set shelf = collection[index] %}
+          <center>
+            <p><a href="{{ url_for('shelf', shelf_id=shelf[0]) }}"> {{ shelf[1] }} </a></p>
+            <p>{{ shelf[2] }}</p>
+          </center>
+        {% endif %}
+      </div>
+
+  {% endfor %}
 </div>
 
 {% endblock %}

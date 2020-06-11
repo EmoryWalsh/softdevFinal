@@ -49,13 +49,18 @@ def shelf(shelf_id):
     name = shelf_info[0][0]
     description = shelf_info[0][1]
     mybooks = db.get_shelf_books(shelf_id)
-    print(mybooks)
+    #print(mybooks)
+    if(request.form):
+        print("request")
+        maybeBook = request.form.get('addBook')
+        flash("mayeb")
+        return render_template("shelf.html", shelf_id=shelf_id, name=name, description=description, maybeBook=maybeBook)
     if(mybooks != []):
         bookdata = [get_bookinfo(id) for id in mybooks[0]]
         print(bookdata)
-        return render_template("shelf.html", name=name, description=description, books=bookdata)
+        return render_template("shelf.html", shelf_id=shelf_id, name=name, description=description, books=bookdata)
     else:
-        return render_template("shelf.html", name=name, description=description)
+        return render_template("shelf.html", shelf_id=shelf_id, name=name, description=description)
 
 @app.route('/bookfinder', methods=["GET","POST"])
 def bookfinder():

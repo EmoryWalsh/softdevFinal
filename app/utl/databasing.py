@@ -107,17 +107,22 @@ def get_bookinfo(book_id):
         authors.replace("['", "" )
         authors.replace("']", "")
     c.execute('SELECT genre FROM genres WHERE book_id=?;',(book_id,))
-    genres = list(map(lambda res: res, c.fetchone()))
+    genres = list(map(lambda res: res, c.fetchall()))
+    print(genres)
+    genresList = []
     for genre in genres:
-        genre.replace("['", "" )
-        genre.replace("']", "")
+        genre = list(genre)
+        print(genre[0])
+        genre[0].replace("('", "" )
+        genre[0].replace("',)", "")
+        genresList.append(genre[0])
         #print(genre)
     return {
         'title':bookdata[0],
         'description':bookdata[2],
         'rating':bookdata[3],
         'authors':authors,
-        'genres':genres,
+        'genres':genresList,
         'rating_count':bookdata[4],
         'cover_url':bookdata[1],
         'pages':bookdata[5]

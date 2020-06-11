@@ -45,18 +45,13 @@ def newshelf():
 
 @app.route("/<shelf_id>/shelf", methods=["GET","POST"])
 def shelf(shelf_id):
+    print(shelf_id)
     shelf_info = db.get_shelf_info(shelf_id)
+    print(shelf_info)
     name = shelf_info[0][0]
     description = shelf_info[0][1]
     mybooks = db.get_shelf_books(shelf_id)
     print(mybooks)
-    print(request.form)
-
-    if(request.form):
-        print("request")
-        maybeBook = request.form.get('addBook')
-        flash("mayeb")
-        return render_template("shelf.html", shelf_id=shelf_id, name=name, description=description, maybeBook=maybeBook)
     if(mybooks != []):
         bookdata = [get_bookinfo(id) for id in mybooks[0]]
         print(bookdata)
@@ -79,6 +74,19 @@ def bookfinder():
         #print(books)
         return render_template("bookfinder.html", genres=genres, num=num, books=books)
     return render_template("bookfinder.html", genres=genres)
+
+@app.route("/<shelf_id>/addbook", methods=["GET","POST"])
+def addbook(shelf_id):
+    maybeBook = request.form.get("newBook")
+    print(shelf_id)
+    book_id = db.searchfor_book(maybeBook)
+    if book_id != False:
+        db.addbook(book_id, shelf_id)
+    print(maybeBook)
+    print(book_id)
+    print("hi")
+    flash("mayeb")
+    return redirect( url_for('shelf', shelf_id=shelf_id))
 
 @app.route('/book/<title>')
 def bookdata(title):

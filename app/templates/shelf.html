@@ -17,20 +17,12 @@
 
 {% block content %}
 
-<div style="padding:20px;"
-  <form method="post">
+<div style="padding:20px;" >
+  <h4>Add Book</h4>
+  <form action="/{{shelf_id}}/addbook" name="addBook" id="addBook" method="post">
     <div class="form-group">
-      <div class="row">
-        <div class="col-lg">
-          <div class="form-group">
-            <label for="addBook">Add Book</label>
-            <input class="form-control" id="addBook" name="addBook" placeholder="Catch-22">
-          </div>
-        </div>
-        <div class="col-sm" style="padding-top:30px;">
-          <button class="btn btn-outline-dark" name="search" type="submit">Search</button>
-        </div>
-      </div>
+      <input type="text" placeholder="Catch-22" name="newbook" id = "newbook">
+      <button type="submit" class="btn btn-outline-dark">Submit</button>
     </div>
   </form>
 </div>

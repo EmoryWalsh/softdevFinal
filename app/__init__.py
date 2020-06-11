@@ -21,8 +21,6 @@ def home():
 def myshelves():
     if('uid' in session):
         userid = session['uid']
-        collection = db.get_my_shelves(userid)
-        print(collection)
         if(request.form):
             print("here")
             #title = request.form.get('addBook')
@@ -35,6 +33,7 @@ def myshelves():
             db.add_shelf(userid, name, description)
             #print(title)
             #flash(title)
+        collection = db.get_my_shelves(userid)
         return render_template("myshelves.html", userid = userid, collection = collection)
     else:
         flash("You must log in to view your bookshelves.")
@@ -51,6 +50,8 @@ def shelf(shelf_id):
     description = shelf_info[0][1]
     mybooks = db.get_shelf_books(shelf_id)
     print(mybooks)
+    print(request.form)
+
     if(request.form):
         print("request")
         maybeBook = request.form.get('addBook')

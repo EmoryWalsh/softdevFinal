@@ -14,7 +14,7 @@
 <div class="shelves" style="padding:20px;">
   <!-- need to change so that it checks userid -->
   {% set index = 0 %}
-  {% set len = (collection|length / 3)|int %}
+  {% set len = (collection|length / 3+1)|int %}
 
   {% for x in range(0, len) %}
     <div class="row">

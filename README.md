@@ -23,6 +23,7 @@
 
 
   **Download Book Data**
+  
   Download CSV dataset from [Kaggle Dataset - Goodreads Best Books](https://www.kaggle.com/meetnaren/goodreads-best-books/)
   - You only need the `book_data.csv` file, not the images.
   - Download the file to `<repo>/app/dat/book_data.csv`

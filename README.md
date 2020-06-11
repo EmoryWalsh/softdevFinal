@@ -40,7 +40,7 @@
 
   Now, you can clone this repo. To do so, type into a terminal session:
   ```bash
-  git clone https://github.com/EmoryWalsh/softdevP4.git
+  git clone https://github.com/EmoryWalsh/softdevFinal.git
   ```
 
   The project repo should then clone into whatever folder you ran the clone command in.

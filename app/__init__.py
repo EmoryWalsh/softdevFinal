@@ -19,20 +19,24 @@ def home():
 
 @app.route('/myshelves', methods=["GET","POST"])
 def myshelves():
-    userid = session['uid']
-    collection = db.get_my_shelves(userid)
-    if(request.form):
-        print("here")
-        #title = request.form.get('addBook')
+    if('uid' in session):
         userid = session['uid']
-        name = request.form.get("shelfName")
-        description = request.form.get("shelfDescription")
-        print(userid)
-        print(name)
-        db.add_shelf(userid, name, description)
-        #print(title)
-        #flash(title)
-    return render_template("myshelves.html", userid = userid, collection = collection)
+        collection = db.get_my_shelves(userid)
+        if(request.form):
+            print("here")
+            #title = request.form.get('addBook')
+            userid = session['uid']
+            name = request.form.get("shelfName")
+            description = request.form.get("shelfDescription")
+            print(userid)
+            print(name)
+            db.add_shelf(userid, name, description)
+            #print(title)
+            #flash(title)
+        return render_template("myshelves.html", userid = userid, collection = collection)
+    else:
+        flash("You must log in to view your bookshelves.")
+        return render_template("home.html")
 
 @app.route('/newshelf', methods=["GET","POST"])
 def newshelf():

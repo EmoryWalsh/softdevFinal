@@ -21,7 +21,7 @@
   <h4>Add Book</h4>
   <form action="/{{shelf_id}}/addbook" name="addBook" id="addBook" method="post">
     <div class="form-group">
-      <input type="text" placeholder="Catch-22" name="newbook" id = "newbook">
+      <input type="text" placeholder="Catch-22" name="newBook" id = "newBook">
       <button type="submit" class="btn btn-outline-dark">Submit</button>
     </div>
   </form>
@@ -31,17 +31,17 @@
 maybe
 {% endif %}
 
-{% if books %}
+{% if bookdata %}
     <div style="padding:20px;font-size:20px;">
       {% set index = 0 %}
-      {% set len = (num / 3)|int %}
+      {% set len = (books|length / 3)|int %}
 
 
       {% for x in range(0, len) %}
         <div class="row" style="padding-bottom:10px">
           <div class="col-sm justify-content-center">
             {% set index = x * 3 %}
-            {% set book = books[index] %}
+            {% set book = bookdata[index] %}
             <center>
               <p><img src={{book.cover_url}} height="350px" width="250px"><p>
               <p><strong><a href="/book/{{book.title}}">{{book.title}}</a></strong></p>
@@ -50,7 +50,7 @@ maybe
           </div>
           <div class="col-sm">
             {% set index = index + 1 %}
-            {% set book = books[index] %}
+            {% set book = bookdata[index] %}
             {% if index < num %}
             <center>
               <p><img src={{book.cover_url}} height="350px" width="250px"><p>
@@ -61,7 +61,7 @@ maybe
           </div>
           <div class="col-sm">
             {% set index = index + 1 %}
-            {% set book = books[index] %}
+            {% set book = bookdata[index] %}
             {% if index < num %}
               <center>
                 <p><img src={{book.cover_url}} height="350px" width="250px"><p>

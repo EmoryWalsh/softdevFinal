@@ -22,14 +22,11 @@ def myshelves():
     if('uid' in session):
         userid = session['uid']
         if(request.form):
-            print("here")
             #title = request.form.get('addBook')
             userid = session['uid']
             name = request.form.get("shelfName")
             description = request.form.get("shelfDescription")
             flash([name, description])
-            print(userid)
-            print(name)
             db.add_shelf(userid, name, description)
             #print(title)
             #flash(title)
@@ -45,17 +42,18 @@ def newshelf():
 
 @app.route("/<shelf_id>/shelf", methods=["GET","POST"])
 def shelf(shelf_id):
-    print(shelf_id)
     shelf_info = db.get_shelf_info(shelf_id)
     print(shelf_info)
     name = shelf_info[0][0]
     description = shelf_info[0][1]
-    mybooks = db.get_shelf_books(shelf_id)
-    print(mybooks)
+    mybooks = list(db.get_shelf_books(shelf_id))
+    mybooks = [list(ele) for ele in mybooks]
     if(mybooks != []):
-        bookdata = [get_bookinfo(id) for id in mybooks[0]]
-        print(bookdata)
-        return render_template("shelf.html", shelf_id=shelf_id, name=name, description=description, books=bookdata)
+        #bookdata = [list(db.get_bookinfo(id) for id in mybooks[0])]
+        print(mybooks)
+        print(mybooks[0][0][0])
+        print(mybooks[0][0][1])
+        return render_template("shelf.html", shelf_id=shelf_id, name=name, description=description, bookdata=mybooks)
     else:
         return render_template("shelf.html", shelf_id=shelf_id, name=name, description=description)
 
@@ -69,6 +67,7 @@ def bookfinder():
         max = request.form.get("max")
 
         result = db.book_finder(genre, int(min), int(max))
+        print(result)
         books = result[0]
         num = int(result[1])
         #print(books)
@@ -78,14 +77,13 @@ def bookfinder():
 @app.route("/<shelf_id>/addbook", methods=["GET","POST"])
 def addbook(shelf_id):
     maybeBook = request.form.get("newBook")
+    print("Hi")
+    print(maybeBook)
     print(shelf_id)
     book_id = db.searchfor_book(maybeBook)
     if book_id != False:
-        db.addbook(book_id, shelf_id)
-    print(maybeBook)
-    print(book_id)
-    print("hi")
-    flash("mayeb")
+        db.add_book(int(shelf_id), str(book_id))
+        flash(maybeBook)
     return redirect( url_for('shelf', shelf_id=shelf_id))
 
 @app.route('/book/<title>')

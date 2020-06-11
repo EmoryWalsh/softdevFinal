@@ -56,11 +56,7 @@ def bookfinder():
 
 @app.route('/book/<title>')
 def bookdata(title):
-    print(title)
     data = db.searchfor_book(title)
-    print("data")
-    print(data)
-    print(data['title'])
     book_title = data['title']
     description = data['description']
     rating = data['rating']
@@ -69,7 +65,19 @@ def bookdata(title):
     pages = data['pages']
     url = data['cover_url']
     return render_template("book.html", title=book_title, description=description, rating=rating, authors=authors, genres=genres, pages=pages, url=url)
-    return render_template("book.html")
+
+@app.route('/book/11/22/1963')
+def special_case():
+    title = '11/22/1963'
+    data = db.searchfor_book(title)
+    book_title = data['title']
+    description = data['description']
+    rating = data['rating']
+    authors = data['authors']
+    genres = data['genres']
+    pages = data['pages']
+    url = data['cover_url']
+    return render_template("book.html", title=book_title, description=description, rating=rating, authors=authors, genres=genres, pages=pages, url=url)
 
 @app.route('/help')
 def help():

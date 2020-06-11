@@ -23,7 +23,7 @@
 
 
   **Download Book Data**
-  
+
   Download CSV dataset from [Kaggle Dataset - Goodreads Best Books](https://www.kaggle.com/meetnaren/goodreads-best-books/)
   - You only need the `book_data.csv` file, not the images.
   - Download the file to `<repo>/app/dat/book_data.csv`
@@ -49,7 +49,7 @@
 
   You must install the pip modules listed in the /doc/requirements.txt file. To do so, install them in a Terminal with:
   ```bash
-  pip install -r <location of requirements.txt file>
+  pip3 install -r <location of requirements.txt file>
   ```
 
   The -r flag is necessary to distinguish it from a typical pip install. Without the -r, pip will look for a package online called "requirements.txt". That is obviously not desirable.

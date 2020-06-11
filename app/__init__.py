@@ -28,6 +28,7 @@ def myshelves():
             userid = session['uid']
             name = request.form.get("shelfName")
             description = request.form.get("shelfDescription")
+            flash([name, description])
             print(userid)
             print(name)
             db.add_shelf(userid, name, description)
@@ -41,6 +42,20 @@ def myshelves():
 @app.route('/newshelf', methods=["GET","POST"])
 def newshelf():
     return render_template("newshelf.html")
+
+@app.route("/<shelf_id>/shelf", methods=["GET","POST"])
+def shelf(shelf_id):
+    shelf_info = db.get_shelf_info(shelf_id)
+    name = shelf_info[0][0]
+    description = shelf_info[0][1]
+    mybooks = db.get_shelf_books(shelf_id)
+    print(mybooks)
+    if(mybooks != []):
+        bookdata = [get_bookinfo(id) for id in mybooks[0]]
+        print(bookdata)
+        return render_template("shelf.html", name=name, description=description, books=bookdata)
+    else:
+        return render_template("shelf.html", name=name, description=description)
 
 @app.route('/bookfinder', methods=["GET","POST"])
 def bookfinder():
@@ -121,17 +136,6 @@ def logout():
 
     flash("You are already logged out.")
     return redirect(url_for('home'))
-
-@app.route("/<shelf_id>/shelf", methods=["GET","POST"])
-def shelf(shelf_id):
-    shelf_info = db.get_shelf_info(shelf_id)
-    name = shelf_info[0][0]
-    description = shelf_info[0][1]
-    mybooks = db.get_shelf_books(shelf_id)
-    print(mybooks)
-    bookdata = [get_bookinfo(id) for id in mybooks[0]]
-    print(bookdata)
-    return render_template("shelf.html", name=name, description=description, books=bookdata)
 
 if __name__ == '__main__':
     app.debug = True

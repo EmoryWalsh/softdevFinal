@@ -4,13 +4,13 @@
 
 {% block pgtitle %}My Bookshelves{% endblock%}
 
+{% block content %}
 <div style="padding:20px">
   <form action="/newshelf" method="post">
     <button class="btn btn-dark" type="submit">Create New Bookshelf</button>
   </form>
 </div>
 
-{% block content %}
 <div class="shelves" style="padding:20px;">
   <!-- need to change so that it checks userid -->
   {% set index = 0 %}
@@ -48,6 +48,7 @@
           </center>
         {% endif %}
       </div>
+     </div>
 
   {% endfor %}
 </div>

@@ -22,6 +22,7 @@ def myshelves():
     if('uid' in session):
         userid = session['uid']
         collection = db.get_my_shelves(userid)
+        print(collection)
         if(request.form):
             print("here")
             #title = request.form.get('addBook')
@@ -49,7 +50,7 @@ def shelf(shelf_id):
     name = shelf_info[0][0]
     description = shelf_info[0][1]
     mybooks = db.get_shelf_books(shelf_id)
-    #print(mybooks)
+    print(mybooks)
     if(request.form):
         print("request")
         maybeBook = request.form.get('addBook')

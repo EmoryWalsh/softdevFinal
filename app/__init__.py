@@ -42,7 +42,6 @@ def bookfinder():
         result = db.book_finder(genre, int(min), int(max))
         books = result[0]
         num = int(result[1])
-        #print(books)
         return render_template("bookfinder.html", genres=genres, num=num, books=books)
     return render_template("bookfinder.html", genres=genres)
 
@@ -94,6 +93,18 @@ def shelf(shelf_id):
     db.add_shelf(userid, name, description)
     # may need to create template for adding a shelf and I don't know how to add access the shelf id
     return render_template("shelf.html")
+
+@app.route("/book/<book_id>")
+def book(book_id):
+    try:
+        book_id = int(book_id)
+    except ValueError:
+        flash("Please enter a valid book ID.")
+        return render_template("book.html")
+    book_data = db.get_bookinfo(int(book_id))
+    print(book_data)
+    return render_template("book.html", book_info = book_data)
+
 
 if __name__ == '__main__':
     app.debug = True

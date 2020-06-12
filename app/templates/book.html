@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Book{% endblock %}
+
+{% block pgtitle %}
+  {% if book_info %}  {{ book_info["title"] }}
+  {% else %} Book Info
+  {% endif %}
+{% endblock%}
+
+{% block style %}
+.dropdown-menu {
+  max-height: 200px;
+  overflow-y: auto;
+}
+{% endblock %}
+
+{% block content %}
+
+  {% if book_info %}
+  <br><br>
+    <img src="{{book_info['cover_url']}}" alt="cover image" style="  display: block; margin-left: auto; margin-right: auto; width: 15%;"></img>
+    <h2 style="align: center;"><strong>Genre: </strong></h2>
+      {% for genre in book_info.genres %}
+      <button type="button" class="btn btn-info">{{ genre }}</button>
+      {% endfor %}
+    <h2>{{book_info["pages"]}}</h2>
+  {% endif %}
+
+
+{% endblock %}

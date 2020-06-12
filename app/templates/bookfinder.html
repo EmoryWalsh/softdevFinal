@@ -48,7 +48,7 @@
           <div class="col-sm justify-content-center">
             {% set index = x * 3 %}
             {% set book = books[index] %}
-            <center><p><img src={{book.cover_url}} height="350px" width="250px"><p>
+            <center><p><a href="{{'/book/%s'%book.id }}"><img src={{book.cover_url}} height="350px" width="250px"></a><p>
             <p><strong>{{book.title}}</strong></p>
             <p> by {{book.authors}}</p></center>
           </div>
@@ -56,7 +56,7 @@
             {% set index = index + 1 %}
             {% set book = books[index] %}
             {% if index < num %}
-              <center><p><img src={{book.cover_url}} height="350px" width="250px"><p>
+              <center><p><a href="{{'/book/%s'%book.id }}"><img src={{book.cover_url}} height="350px" width="250px"></a><p>
               <p><strong>{{book.title}}</strong></p>
               <p> by {{book.authors}}</p></center>
             {% endif %}
@@ -65,7 +65,7 @@
             {% set index = index + 1 %}
             {% set book = books[index] %}
             {% if index < num %}
-              <center><p><img src={{book.cover_url}} height="350px" width="250px"><p>
+              <center><p><a href="{{'/book/%s'%book.id }}"><img src={{book.cover_url}} height="350px" width="250px"></a><p>
               <p><strong>{{book.title}}</strong></p>
               <p>by {{book.authors}}</p></center>
             {% endif %}

@@ -49,7 +49,6 @@
             {% set index = x * 3 %}
             {% set book = books[index] %}
             <center><p><a href="{{'/book/%s'%book.id }}"><img src={{book.cover_url}} height="350px" width="250px"></a><p>
-            <p>ID: {{book.id}}</p>
             <p><strong>{{book.title}}</strong></p>
             <p> by {{book.authors}}</p></center>
           </div>

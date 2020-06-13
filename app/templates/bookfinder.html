@@ -40,7 +40,7 @@
     <div style="padding:20px;font-size:20px;">
       <h3>{{ num }} books found.</h3>
       {% set index = 0 %}
-      {% set len = (num / 3)|int %}
+      {% set len = (num / 3 + 1)|int %}
 
 
       {% for x in range(0, len) %}

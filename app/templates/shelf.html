@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
 
-{% block title %} {{ title }} {% endblock %}
+{% block title %} {{ name }} {% endblock %}
 
-{% block pgtitle %} {{ title }} {% endblock%}
+{% block pgtitle %}
+  {{ name }}
+  <h5>{{ description }} </h5>
+
+{% endblock %}
 
 {% block style %}
 .dropdown-menu {
@@ -12,20 +16,67 @@
 {% endblock %}
 
 {% block content %}
-<h6> Description: {{ description }} </h6>
-<div class = "books">
-  {% for book in shelf_books %}
-    <div class="row">
-      <div class = "col">
-        <p>{{ book.title }}</p>
-      </div>
-      <div class = "col">
-        <p>{{ book.author }}</p>
-      </div>
-      <div class = "col">
-        <p>{{ book.description }}</p>
-      </div>
+
+<div style="padding:20px;" >
+  <h4>Add Book</h4>
+  <form action="/{{shelf_id}}/addbook" name="addBook" id="addBook" method="post">
+    <div class="form-group">
+      <input type="text" placeholder="Catch-22" name="newBook" id = "newBook">
+      <button type="submit" class="btn btn-outline-dark">Submit</button>
     </div>
-  {% endfor %}
+  </form>
 </div>
+
+{% if maybeBook %}
+maybe
+{% endif %}
+
+{% if bookdata %}
+    <div style="padding:20px;font-size:20px;">
+      {% set index = 0 %}
+      {% set len = (books|length / 3)|int %}
+
+
+      {% for x in range(0, len) %}
+        <div class="row" style="padding-bottom:10px">
+          <div class="col-sm justify-content-center">
+            {% set index = x * 3 %}
+            {% set book = bookdata[index] %}
+            <center>
+              <p><img src={{book.cover_url}} height="350px" width="250px"><p>
+              <p><strong><a href="/book/{{book.title}}">{{book.title}}</a></strong></p>
+              <p> by {{book.authors}}</p>
+            </center>
+          </div>
+          <div class="col-sm">
+            {% set index = index + 1 %}
+            {% set book = bookdata[index] %}
+            {% if index < num %}
+            <center>
+              <p><img src={{book.cover_url}} height="350px" width="250px"><p>
+              <p><strong><a href="/book/{{book.title}}">{{book.title}}</a></strong></p>
+              <p> by {{book.authors}}</p>
+            </center>
+            {% endif %}
+          </div>
+          <div class="col-sm">
+            {% set index = index + 1 %}
+            {% set book = bookdata[index] %}
+            {% if index < num %}
+              <center>
+                <p><img src={{book.cover_url}} height="350px" width="250px"><p>
+                <p><strong><a href="/book/{{book.title}}">{{book.title}}</a></strong></p>
+                <p>by {{book.authors}}</p>
+              </center>
+            {% endif %}
+          </div>
+        </div>
+
+      <br>
+      {% endfor %}
+    </div>
+
+
+{% endif %}
+
 {% endblock %}

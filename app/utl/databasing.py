@@ -107,20 +107,23 @@ def get_bookinfo(book_id):
         authors.replace("['", "" )
         authors.replace("']", "")
     c.execute('SELECT genre FROM genres WHERE book_id=?;',(book_id,))
-    #genres = list(map(lambda res[0]: res[0], c.fetchall()))
-    genres = c.fetchall()
+    genres = list(map(lambda res: res, c.fetchall()))
     #print(genres)
-    genres = [genre[0] for genre in genres]
-    # for genre in genres:
-    #     genre.replace("['", "" )
-    #     genre.replace("']", "")
+    genresList = []
+    for genre in genres:
+        genre = list(genre)
+        #print(genre[0])
+        genre[0].replace("('", "" )
+        genre[0].replace("',)", "")
+        genresList.append(genre[0])
+        #print(genre)
     return {
         'id':book_id,
         'title':bookdata[0],
         'description':bookdata[2],
         'rating':bookdata[3],
         'authors':authors,
-        'genres':genres,
+        'genres':genresList,
         'rating_count':bookdata[4],
         'cover_url':bookdata[1],
         'pages':bookdata[5]
@@ -128,7 +131,7 @@ def get_bookinfo(book_id):
 
 def searchfor_book(book_title):
     """Return {title,description,rating,authors,genres,rating_count,cover_url,pages} for a specified book_id"""
-    book_title = capitalize_title(book_title) #book_data.csv titles are uppercase
+    book_title = book_title #book_data.csv titles are uppercase
     db = sqlite3.connect(DB_FILENAME)
     c = db.cursor()
     #find book_id associated w book_title (use first instance)
@@ -174,7 +177,8 @@ def book_finder(genre, min_pg, max_pg):
 
 def add_shelf(uid, name, descr):
     db = sqlite3.connect(DB_FILENAME)
-    c = db.cursor()
+    c = db.cursor();
+    print([uid, name, descr])
     c.execute("INSERT INTO bookshelves (uid, title, description) VALUES (?, ?, ?);", (uid, name, descr))
     db.commit()
     db.close()
@@ -185,6 +189,27 @@ def add_book(shelfid, bookid):
     c.execute("INSERT INTO shelfbooks (book_id, shelf_id) VALUES (?, ?);", (bookid, shelfid))
     db.commit()
     db.close()
+
+def get_my_shelves(userid):
+    db = sqlite3.connect(DB_FILENAME)
+    c = db.cursor()
+    c.execute('SELECT shelf_id, title, description FROM bookshelves WHERE uid=?;',(userid,))
+    myshelves = c.fetchall()
+    return myshelves
+
+def get_shelf_info(shelf_id):
+    db = sqlite3.connect(DB_FILENAME)
+    c = db.cursor()
+    c.execute('SELECT title, description FROM bookshelves WHERE shelf_id=?;',(shelf_id,))
+    shelfinfo = c.fetchall()
+    return shelfinfo
+
+def get_shelf_books(shelf_id):
+    db = sqlite3.connect(DB_FILENAME)
+    c = db.cursor()
+    c.execute('SELECT book_id FROM shelfbooks WHERE shelf_id=?;',(shelf_id,))
+    mybooks = c.fetchall()
+    return mybooks
 
 # =============== STRING HELPER FUNCTIONS ===============
 def capitalize_title(str):

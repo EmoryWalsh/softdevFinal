@@ -19,16 +19,43 @@ def home():
 
 @app.route('/myshelves', methods=["GET","POST"])
 def myshelves():
-    return render_template("myshelves.html")
+    if('uid' in session):
+        userid = session['uid']
+        if(request.form):
+            #title = request.form.get('addBook')
+            userid = session['uid']
+            name = request.form.get("shelfName")
+            description = request.form.get("shelfDescription")
+            flash([name, description])
+            db.add_shelf(userid, name, description)
+            #print(title)
+            #flash(title)
+        collection = db.get_my_shelves(userid)
+        return render_template("myshelves.html", userid = userid, collection = collection)
+    else:
+        flash("You must log in to view your bookshelves.")
+        return render_template("home.html")
 
 @app.route('/newshelf', methods=["GET","POST"])
 def newshelf():
-    if(request.form):
-        title = request.form.get('addBook')
-        print("HIS")
-        print(title)
-        flash(title)
     return render_template("newshelf.html")
+
+@app.route("/<shelf_id>/shelf", methods=["GET","POST"])
+def shelf(shelf_id):
+    shelf_info = db.get_shelf_info(shelf_id)
+    print(shelf_info)
+    name = shelf_info[0][0]
+    description = shelf_info[0][1]
+    mybooks = list(db.get_shelf_books(shelf_id))
+    mybooks = [list(ele) for ele in mybooks]
+    if(mybooks != []):
+        #bookdata = [list(db.get_bookinfo(id) for id in mybooks[0])]
+        print(mybooks)
+        print(mybooks[0][0][0])
+        print(mybooks[0][0][1])
+        return render_template("shelf.html", shelf_id=shelf_id, name=name, description=description, bookdata=mybooks)
+    else:
+        return render_template("shelf.html", shelf_id=shelf_id, name=name, description=description)
 
 @app.route('/bookfinder', methods=["GET","POST"])
 def bookfinder():
@@ -40,10 +67,48 @@ def bookfinder():
         max = request.form.get("max")
 
         result = db.book_finder(genre, int(min), int(max))
+        print(result)
         books = result[0]
         num = int(result[1])
         return render_template("bookfinder.html", genres=genres, num=num, books=books)
     return render_template("bookfinder.html", genres=genres)
+
+@app.route("/<shelf_id>/addbook", methods=["GET","POST"])
+def addbook(shelf_id):
+    maybeBook = request.form.get("newBook")
+    print("Hi")
+    print(maybeBook)
+    print(shelf_id)
+    book_id = db.searchfor_book(maybeBook)
+    if book_id != False:
+        db.add_book(int(shelf_id), str(book_id))
+        flash(maybeBook)
+    return redirect( url_for('shelf', shelf_id=shelf_id))
+
+@app.route('/book/<book_id>')
+def bookdata(title):
+    data = db.searchfor_book(title)
+    book_title = data['title']
+    description = data['description']
+    rating = data['rating']
+    authors = data['authors']
+    genres = data['genres']
+    pages = data['pages']
+    url = data['cover_url']
+    return render_template("book.html", title=book_title, description=description, rating=rating, authors=authors, genres=genres, pages=pages, url=url)
+
+@app.route('/book/11/22/1963')
+def special_case():
+    title = '11/22/1963'
+    data = db.searchfor_book(title)
+    book_title = data['title']
+    description = data['description']
+    rating = data['rating']
+    authors = data['authors']
+    genres = data['genres']
+    pages = data['pages']
+    url = data['cover_url']
+    return render_template("book.html", title=book_title, description=description, rating=rating, authors=authors, genres=genres, pages=pages, url=url)
 
 @app.route('/help')
 def help():
@@ -74,6 +139,17 @@ def google_auth():
         # print(auth_url)
         return redirect( auth_url )
 
+# @app.route("/book/<book_id>")
+# def book(book_id):
+#     try:
+#         book_id = int(book_id)
+#     except ValueError:
+#         flash("Please enter a valid book ID.")
+#         return render_template("book.html")
+#     book_data = db.get_bookinfo(int(book_id))
+#     print(book_data)
+#     return render_template("book.html", book_info = book_data)
+
 @app.route("/logout")
 def logout():
     if 'uid' in session: #checks that a user is logged into a session
@@ -83,28 +159,6 @@ def logout():
 
     flash("You are already logged out.")
     return redirect(url_for('home'))
-
-@app.route("/<shelf_id>/shelf", methods=["POST"])
-def shelf(shelf_id):
-    # idk how to access uid
-    userid = session['uid']
-    name = request.form.get("shelfName")
-    description = request.form.get("shelfDesc")
-    db.add_shelf(userid, name, description)
-    # may need to create template for adding a shelf and I don't know how to add access the shelf id
-    return render_template("shelf.html")
-
-@app.route("/book/<book_id>")
-def book(book_id):
-    try:
-        book_id = int(book_id)
-    except ValueError:
-        flash("Please enter a valid book ID.")
-        return render_template("book.html")
-    book_data = db.get_bookinfo(int(book_id))
-    print(book_data)
-    return render_template("book.html", book_info = book_data)
-
 
 if __name__ == '__main__':
     app.debug = True

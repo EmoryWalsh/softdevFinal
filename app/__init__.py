@@ -86,8 +86,13 @@ def addbook(shelf_id):
     return redirect( url_for('shelf', shelf_id=shelf_id))
 
 @app.route('/book/<book_id>')
-def bookdata(title):
-    data = db.searchfor_book(title)
+def bookdata(book_id):
+    try:
+        book_id = int(book_id)
+    except ValueError:
+        flash("Please enter a valid book ID.")
+        return render_template("book.html")
+    data = db.get_bookinfo(book_id)
     book_title = data['title']
     description = data['description']
     rating = data['rating']

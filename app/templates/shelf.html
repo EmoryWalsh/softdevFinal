@@ -46,7 +46,9 @@ maybe
             <center>
               {% set book = bookdata[index] %}
               <p><a href="/book/{{book.id}}"><img src={{book.cover_url}} height="350px" width="250px"></a><p>
-              <p><strong>{{book.title}}</strong></p>
+              <p><strong>{{book.title}}</strong>
+                <a href="{{ url_for('delbook', shelf_id=shelf_id, book_id=book.id)}}"<button type="button" class="btn btn-danger">  &times;</button></a>
+              </p>
               <p> by {{book.authors}}</p>
               <p>Index: {{ index }}</p?
             </center>
@@ -56,7 +58,9 @@ maybe
               {% if (index + 1) < bookdata|length %}
               {% set book = bookdata[index + 1] %}
               <p><a href="/book/{{book.id}}"><img src={{book.cover_url}} height="350px" width="250px"></a><p>
-              <p><strong>{{book.title}}</strong></p>
+              <p><strong>{{book.title}}</strong>
+                <a href="{{ url_for('delbook', shelf_id=shelf_id, book_id=book.id)}}"<button type="button" class="btn btn-danger">  &times;</button></a>
+              </p>
               <p> by {{book.authors}}</p>
               {% endif %}
             </center>
@@ -66,7 +70,9 @@ maybe
                 {% if (index + 2) < bookdata|length %}
                 {% set book = bookdata[index+2] %}
                 <p><a href="/book/{{book.id}}"><img src={{book.cover_url}} height="350px" width="250px"></a><p>
-                <p><strong>{{book.title}}</strong></p>
+                <p><strong>{{book.title}}</strong>
+                  <a href="{{ url_for('delbook', shelf_id=shelf_id, book_id=book.id)}}"<button type="button" class="btn btn-danger">  &times;</button></a>
+                </p>
                 <p>by {{book.authors}}</p>
                 {% endif %}
               </center>

@@ -130,8 +130,8 @@ def get_bookinfo(book_id):
         }
 
 def searchfor_book(book_title):
-    """Return {title,description,rating,authors,genres,rating_count,cover_url,pages} for a specified book_id"""
-    book_title = book_title #book_data.csv titles are uppercase
+    """Return book_id for given book_title"""
+    book_title = capitalize_title(book_title) #book_data.csv titles are uppercase
     db = sqlite3.connect(DB_FILENAME)
     c = db.cursor()
     #find book_id associated w book_title (use first instance)
@@ -140,8 +140,7 @@ def searchfor_book(book_title):
     if (book_id):
         book_id = book_id[0]
         #find book data associated w book_id
-        out = get_bookinfo(book_id)
-        return out
+        return book_id
     print("Book not found")
     return False
 
@@ -209,6 +208,7 @@ def get_shelf_books(shelf_id):
     c = db.cursor()
     c.execute('SELECT book_id FROM shelfbooks WHERE shelf_id=?;',(shelf_id,))
     mybooks = c.fetchall()
+    #print(mybooks)
     return mybooks
 
 # =============== STRING HELPER FUNCTIONS ===============

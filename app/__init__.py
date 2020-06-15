@@ -44,17 +44,12 @@ def newshelf():
 @app.route("/<shelf_id>/shelf", methods=["GET","POST"])
 def shelf(shelf_id):
     shelf_info = db.get_shelf_info(shelf_id)
-    #print(shelf_info)
     name = shelf_info[0][0]
     description = shelf_info[0][1]
     mybooks = db.get_shelf_books(shelf_id)
     mybooks = [ele[0] for ele in mybooks]
-    print(mybooks)
     if(mybooks != []):
         bookinfo = [db.get_bookinfo(book) for book in mybooks]
-        #print(bookinfo)
-        #print(mybooks[0][0][0])
-        #print(mybooks[0][0][1])
         return render_template("shelf.html", shelf_id=shelf_id, name=name, description=description, bookdata=bookinfo)
     else:
         return render_template("shelf.html", shelf_id=shelf_id, name=name, description=description)
@@ -140,6 +135,7 @@ def bookdata(book_id):
     genres = data['genres']
     pages = data['pages']
     url = data['cover_url']
+    author_books = db.searchfor_author(book_id)
     if('uid' in session):
         userid = session['uid']
         shelves = db.get_my_shelves(userid)
@@ -148,11 +144,10 @@ def bookdata(book_id):
             #book_id = db.searchfor_book(book_title)
             for shelf in shelves:
                 if shelf[1] == bookshelf:
-                    print("add")
                     shelf_id = shelf[0]
                     return redirect(url_for('addbookbookfinder', book_name=book_title, shelf_id=shelf_id))
-        return render_template("book.html", title=book_title, description=description, rating=rating, authors=authors, genres=genres, pages=pages, url=url, shelves=shelves)
-    return render_template("book.html", title=book_title, description=description, rating=rating, authors=authors, genres=genres, pages=pages, url=url)
+        return render_template("book.html", title=book_title, description=description, rating=rating, authors=authors, genres=genres, pages=pages, url=url, shelves=shelves, author_books=author_books)
+    return render_template("book.html", title=book_title, description=description, rating=rating, authors=authors, genres=genres, pages=pages, url=url, author_books=author_books)
 
 @app.route('/help')
 def help():

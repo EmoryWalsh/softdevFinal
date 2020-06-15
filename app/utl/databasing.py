@@ -214,7 +214,9 @@ def get_shelf_books(shelf_id):
 # =============== STRING HELPER FUNCTIONS ===============
 def capitalize_title(str):
     words = str.split(" ");
-    words = [word.capitalize() for word in words]
+    for word in words:
+        if (word != 'and' and word != 'the' and word != 'the' and word != "of"):
+            word = word.capitalize()
     out = " ".join(words)
     return out
 

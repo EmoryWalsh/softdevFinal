@@ -13,6 +13,20 @@
   <center><p><img src={{ url }} height="500px" width="400px"><p>
   <p><i><strong>{{ title }}</strong></i></p>
   <p>by {{ authors }}</p></center>
+  <center><form action="" name="addBooks" method="post">
+    <div class="row" style="padding-bottom:10px">
+      <div class="col-sm">
+        <div class="form-group">
+          <select class="form-control" id="shelf" name="shelf">
+            <option value="" selected disabled>Bookshelf</option>
+            {% for shelf in shelves%}
+              <option>{{ shelf[1] }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    <button class="btn btn-dark" type="submit">Add to Bookshelf</button>
+  </form></center>
 </div>
 <div style="padding:30px;font-size:20px;"">
   <strong><p>Description:</p></strong>

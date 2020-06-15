@@ -22,10 +22,12 @@
         <div class="col-sm justify-content-center">
           {% set index = x * 3 %}
           {% set shelf = collection[index] %}
-          <center>
-            <p><a href="{{ url_for('shelf', shelf_id=shelf[0]) }}"> {{ shelf[1] }} </a></p>
-            <p>{{ shelf[2] }}</p>
-          </center>
+          {% if index < collection|length %}
+            <center>
+              <p><a href="{{ url_for('shelf', shelf_id=shelf[0]) }}"> {{ shelf[1] }} </a></p>
+              <p>{{ shelf[2] }}</p>
+            </center>
+          {% endif %}
         </div>
         <div class="col-sm justify-content-center">
           {% set index = index + 1 %}

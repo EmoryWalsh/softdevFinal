@@ -144,6 +144,24 @@ def searchfor_book(book_title):
     print("Book not found")
     return False
 
+def searchfor_books(book_title):
+    """Return book_id for given book_title"""
+    book_title = book_title.lower() #book_data.csv titles are uppercase
+    db = sqlite3.connect(DB_FILENAME)
+    c = db.cursor()
+    #find book_id associated w book_title (use first instance)
+    c.execute('SELECT book_id FROM books WHERE lower(title)=?;', (book_title,))
+    books = c.fetchall()
+    if books != None:
+        bookList = []
+        for book in books:
+            #print(book)
+            bookList.append(book[0])
+        #find book data associated w book_id
+        return bookList
+    print("Book not found")
+    return False
+
 def get_genres():
     """Returns list of unique genres in book_data.csv"""
     db = sqlite3.connect(DB_FILENAME)
@@ -251,3 +269,4 @@ init_tables()
 #get_genres()
 #book_finder("Science Fiction", 300, 400)
 #print(list_primer([3, 2, 6, 87, 2]))
+#print(searchfor_books("pride and prejudice"))

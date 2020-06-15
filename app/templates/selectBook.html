@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %} Adding to books {% endblock %}
+
+{% block pgtitle %}Which '{{ book_name }}'' do you want to add? {% endblock %}
+
+{% block content %}
+{% if bookinfos %}
+    <div style="padding:30px;font-size:15px;">
+      <h3>{{ num }} books found.</h3>
+      {% set index = 0 %}
+      {% set len = (num / 3 + 1)|int %}
+
+      <form action="/{{shelf_id}}/addbookbookfinder/{{book_name}}" name="addBook" id="addBook" method="post">
+        {% for x in range(0, len) %}
+          <div class="row" style="padding-bottom:10px">
+            <div class="col-sm justify-content-center">
+              {% set index = x * 3 %}
+              {% if index < num %}
+                {% set book = bookinfos[index] %}
+                <center>
+                <p><a href="{{'/book/%s'%book.id }}"><img src={{book.cover_url}} height="350px" width="250px"></a><p>
+                <p><strong>{{book.title}}</strong></p>
+                <p>by {{book.authors}}</p>
+                <p><button type="submit" name="select" value="{{book.id}}" class="btn btn-dark">Select</button></p>
+                <p>{{book.description}}</p></center>
+              </div>
+              {% endif %}
+            <div class="col-sm">
+              {% set index = index + 1 %}
+              {% if index < num %}
+                {% set book = bookinfos[index] %}
+                <center>
+                <p><a href="{{'/book/%s'%book.id }}"><img src={{book.cover_url}} height="350px" width="250px"></a><p>
+                <p><strong>{{book.title}}</strong></p>
+                <p>by {{book.authors}}</p>
+                <p><button type="submit" name="select" value="{{book.id}}" class="btn btn-dark">Select</button></p>
+                <p>{{book.description}}</p></center>
+              {% endif %}
+            </div>
+            <div class="col-sm">
+              {% set index = index + 1 %}
+              {% if index < num %}
+                {% set book = bookinfos[index] %}
+                <center>
+                <p><a href="{{'/book/%s'%book.id }}"><img src={{book.cover_url}} height="350px" width="250px"></a><p>
+                <p><strong>{{book.title}}</strong></p>
+                <p>by {{book.authors}}</p>
+                <p><button type="submit" name="select" value="{{book.id}}" class="btn btn-dark">Select</button></p>
+                <p>{{book.description}}</p></center>
+              {% endif %}
+            </div>
+          </div>
+        </form>
+
+      <br>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endblock %}

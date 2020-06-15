@@ -59,6 +59,17 @@ def shelf(shelf_id):
     else:
         return render_template("shelf.html", shelf_id=shelf_id, name=name, description=description)
 
+@app.route("/delshelf")
+def delete_shelf():
+    if ('uid' in session):
+        if ('shelf_id' in request.args):
+            shelf_id = request.args.get('shelf_id')
+            db.del_shelf(shelf_id)
+        #flash("deleting: "+str(shelf_id))
+        return redirect(url_for("myshelves"))
+    flash("You must log in to view your bookshelves.")
+    return render_template("home.html")
+
 @app.route('/bookfinder', methods=["GET","POST"])
 def bookfinder():
     genres = db.get_genres()
@@ -88,6 +99,17 @@ def addbook(shelf_id):
         db.add_book(int(shelf_id), str(book_id))
         flash(maybeBook)
     return redirect( url_for('shelf', shelf_id=shelf_id))
+
+@app.route("/delbook")
+def delbook():
+    if ('uid' in session):
+        if ('shelf_id' in request.args and 'book_id' in request.args):
+            shelfid = request.args.get('shelf_id')
+            bookid = request.args.get('book_id')
+            db.del_book(shelfid, bookid)
+            return redirect( url_for('shelf', shelf_id=shelfid))
+        return redirect( url_for('myshelves'))
+    return redirect(url_for("home"))
 
 @app.route('/book/<book_id>')
 def bookdata(book_id):

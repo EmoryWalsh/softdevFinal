@@ -21,7 +21,7 @@
   <h4>Add Book</h4>
   <form action="/{{shelf_id}}/addbook" name="addBook" id="addBook" method="post">
     <div class="form-group">
-      <input type="text" placeholder="Catch-22" name="newBook" id = "newBook">
+      <input type="text" placeholder="Catch-22" name="newBook" id = "newBook" required>
       <button type="submit" class="btn btn-outline-dark">Submit</button>
     </div>
   </form>
@@ -50,7 +50,6 @@ maybe
                 <a href="{{ url_for('delbook', shelf_id=shelf_id, book_id=book.id)}}"<button type="button" class="btn btn-danger">  &times;</button></a>
               </p>
               <p> by {{book.authors}}</p>
-              <p>Index: {{ index }}</p?
             </center>
           </div>
           <div class="col-sm">

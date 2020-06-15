@@ -131,16 +131,34 @@ def get_bookinfo(book_id):
 
 def searchfor_book(book_title):
     """Return book_id for given book_title"""
-    book_title = capitalize_title(book_title) #book_data.csv titles are uppercase
+    book_title = book_title.lower() #book_data.csv titles are uppercase
     db = sqlite3.connect(DB_FILENAME)
     c = db.cursor()
     #find book_id associated w book_title (use first instance)
-    c.execute('SELECT book_id FROM books WHERE title=? LIMIT 1;', (book_title,))
+    c.execute('SELECT book_id FROM books WHERE lower(title)=? LIMIT 1;', (book_title,))
     book_id = c.fetchone()
     if (book_id):
         book_id = book_id[0]
         #find book data associated w book_id
         return book_id
+    print("Book not found")
+    return False
+
+def searchfor_books(book_title):
+    """Return book_id for given book_title"""
+    book_title = book_title.lower() #book_data.csv titles are uppercase
+    db = sqlite3.connect(DB_FILENAME)
+    c = db.cursor()
+    #find book_id associated w book_title (use first instance)
+    c.execute('SELECT book_id FROM books WHERE lower(title)=?;', (book_title,))
+    books = c.fetchall()
+    if books != None:
+        bookList = []
+        for book in books:
+            #print(book)
+            bookList.append(book[0])
+        #find book data associated w book_id
+        return bookList
     print("Book not found")
     return False
 
@@ -230,7 +248,9 @@ def del_shelf(shelf_id):
 # =============== STRING HELPER FUNCTIONS ===============
 def capitalize_title(str):
     words = str.split(" ");
-    words = [word.capitalize() for word in words]
+    for word in words:
+        if (word != 'and' and word != 'the' and word != 'the' and word != "of"):
+            word = word.capitalize()
     out = " ".join(words)
     return out
 
@@ -265,3 +285,4 @@ init_tables()
 #get_genres()
 #book_finder("Science Fiction", 300, 400)
 #print(list_primer([3, 2, 6, 87, 2]))
+#print(searchfor_books("pride and prejudice"))

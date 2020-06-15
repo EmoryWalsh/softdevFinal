@@ -224,6 +224,11 @@ def get_my_shelves(userid):
     c.execute('SELECT shelf_id, title, description FROM bookshelves WHERE uid=?;',(userid,))
     myshelves = c.fetchall()
     print(myshelves)
+    myshelves = [list(shelf) for shelf in myshelves]
+    #print(myshelves)
+    for shelf in myshelves:
+        shelf.append(get_shelflikes(shelf[0]))
+    #print(myshelves)
     return myshelves
 
 def get_shelf_info(shelf_id):

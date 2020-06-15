@@ -189,6 +189,13 @@ def add_book(shelfid, bookid):
     db.commit()
     db.close()
 
+def del_book(shelfid, bookid):
+    db = sqlite3.connect(DB_FILENAME)
+    c = db.cursor()
+    c.execute("DELETE FROM shelfbooks WHERE shelf_id=? AND book_id=?;",(shelfid, bookid))
+    db.commit()
+    db.close()
+
 def get_my_shelves(userid):
     db = sqlite3.connect(DB_FILENAME)
     c = db.cursor()
@@ -210,6 +217,15 @@ def get_shelf_books(shelf_id):
     mybooks = c.fetchall()
     #print(mybooks)
     return mybooks
+
+def del_shelf(shelf_id):
+    db = sqlite3.connect(DB_FILENAME)
+    c = db.cursor()
+    c.execute("DELETE FROM bookshelves WHERE shelf_id=?;",(shelf_id,))
+    db.commit()
+    db.close()
+    print("deleted")
+    return True
 
 # =============== STRING HELPER FUNCTIONS ===============
 def capitalize_title(str):

@@ -33,44 +33,46 @@ maybe
 
 {% if bookdata %}
     <div style="padding:20px;font-size:20px;">
-      {% set index = 0 %}
-      {% set len = (books|length / 3)|int %}
+      <p>{{ bookdata|length }} books in your shelf.</p>
 
+      {% set rows = ((bookdata|length - 1)/ 3)|int + 1 %}
+      <p>{{ rows }} rows.</p>
 
-      {% for x in range(0, len) %}
+      {% for x in range(0, rows) %}
+        {% set index = x * 3 %}
+        {% if index < (bookdata|length) %}
         <div class="row" style="padding-bottom:10px">
           <div class="col-sm justify-content-center">
-            {% set index = x * 3 %}
-            {% set book = bookdata[index] %}
             <center>
-              <p><img src={{book.cover_url}} height="350px" width="250px"><p>
-              <p><strong><a href="/book/{{book.title}}">{{book.title}}</a></strong></p>
+              {% set book = bookdata[index] %}
+              <p><a href="/book/{{book.id}}"><img src={{book.cover_url}} height="350px" width="250px"></a><p>
+              <p><strong>{{book.title}}</strong></p>
               <p> by {{book.authors}}</p>
+              <p>Index: {{ index }}</p?
             </center>
           </div>
           <div class="col-sm">
-            {% set index = index + 1 %}
-            {% set book = bookdata[index] %}
-            {% if index < num %}
             <center>
-              <p><img src={{book.cover_url}} height="350px" width="250px"><p>
-              <p><strong><a href="/book/{{book.title}}">{{book.title}}</a></strong></p>
+              {% if (index + 1) < bookdata|length %}
+              {% set book = bookdata[index + 1] %}
+              <p><a href="/book/{{book.id}}"><img src={{book.cover_url}} height="350px" width="250px"></a><p>
+              <p><strong>{{book.title}}</strong></p>
               <p> by {{book.authors}}</p>
+              {% endif %}
             </center>
-            {% endif %}
           </div>
           <div class="col-sm">
-            {% set index = index + 1 %}
-            {% set book = bookdata[index] %}
-            {% if index < num %}
               <center>
-                <p><img src={{book.cover_url}} height="350px" width="250px"><p>
-                <p><strong><a href="/book/{{book.title}}">{{book.title}}</a></strong></p>
+                {% if (index + 2) < bookdata|length %}
+                {% set book = bookdata[index+2] %}
+                <p><a href="/book/{{book.id}}"><img src={{book.cover_url}} height="350px" width="250px"></a><p>
+                <p><strong>{{book.title}}</strong></p>
                 <p>by {{book.authors}}</p>
+                {% endif %}
               </center>
-            {% endif %}
           </div>
         </div>
+        {% endif %}
 
       <br>
       {% endfor %}

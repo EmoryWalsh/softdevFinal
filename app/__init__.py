@@ -31,6 +31,7 @@ def myshelves():
             #print(title)
             #flash(title)
         collection = db.get_my_shelves(userid)
+        #print(collection)
         return render_template("myshelves.html", userid = userid, collection = collection)
     else:
         flash("You must log in to view your bookshelves.")
@@ -43,17 +44,18 @@ def newshelf():
 @app.route("/<shelf_id>/shelf", methods=["GET","POST"])
 def shelf(shelf_id):
     shelf_info = db.get_shelf_info(shelf_id)
-    print(shelf_info)
+    #print(shelf_info)
     name = shelf_info[0][0]
     description = shelf_info[0][1]
-    mybooks = list(db.get_shelf_books(shelf_id))
-    mybooks = [list(ele) for ele in mybooks]
+    mybooks = db.get_shelf_books(shelf_id)
+    mybooks = [ele[0] for ele in mybooks]
+    print(mybooks)
     if(mybooks != []):
-        #bookdata = [list(db.get_bookinfo(id) for id in mybooks[0])]
-        print(mybooks)
-        print(mybooks[0][0][0])
-        print(mybooks[0][0][1])
-        return render_template("shelf.html", shelf_id=shelf_id, name=name, description=description, bookdata=mybooks)
+        bookinfo = [db.get_bookinfo(book) for book in mybooks]
+        #print(bookinfo)
+        #print(mybooks[0][0][0])
+        #print(mybooks[0][0][1])
+        return render_template("shelf.html", shelf_id=shelf_id, name=name, description=description, bookdata=bookinfo)
     else:
         return render_template("shelf.html", shelf_id=shelf_id, name=name, description=description)
 
@@ -80,7 +82,9 @@ def addbook(shelf_id):
     print(maybeBook)
     print(shelf_id)
     book_id = db.searchfor_book(maybeBook)
+    print(book_id)
     if book_id != False:
+        print("adding.")
         db.add_book(int(shelf_id), str(book_id))
         flash(maybeBook)
     return redirect( url_for('shelf', shelf_id=shelf_id))
@@ -105,7 +109,7 @@ def bookdata(book_id):
 @app.route('/book/11/22/1963')
 def special_case():
     title = '11/22/1963'
-    data = db.searchfor_book(title)
+    data = db.book(title)
     book_title = data['title']
     description = data['description']
     rating = data['rating']

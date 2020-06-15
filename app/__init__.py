@@ -82,15 +82,14 @@ def addbook(shelf_id):
     print(book_id)
     if book_id != False:
         db.add_book(int(shelf_id), str(book_id))
-        flash(maybeBook)
+        flash("Added!")
     return redirect( url_for('shelf', shelf_id=shelf_id))
 
 @app.route("/<shelf_id>/addbookbookfinder/<book_id>", methods=["GET","POST"])
 def addbookbookfinder(book_id, shelf_id):
-    print(book_id)
     if book_id != False:
         db.add_book(int(shelf_id), str(book_id))
-        #flash(maybeBook)
+        flash("Added!")
     return redirect( url_for('shelf', shelf_id=shelf_id))
 
 @app.route('/book/<book_id>', methods=["GET","POST"])

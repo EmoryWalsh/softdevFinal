@@ -263,6 +263,20 @@ def del_shelf(shelf_id):
     print("deleted")
     return True
 
+def shelf_count():
+    db = sqlite3.connect(DB_FILENAME)
+    c = db.cursor()
+    c.execute("SELECT COUNT(*) FROM bookshelves;")
+    s_count = c.fetchall()
+    return s_count
+
+def get_all_shelves():
+    db = sqlite3.connect(DB_FILENAME)
+    c = db.cursor()
+    c.execute('SELECT shelf_id, title, description FROM bookshelves;')
+    allshelves = c.fetchall()
+    return allshelves
+
 # =============== STRING HELPER FUNCTIONS ===============
 def capitalize_title(str):
     words = str.split(" ");

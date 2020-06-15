@@ -15,7 +15,24 @@ app.secret_key = os.urandom(32)
 
 @app.route('/')
 def home():
-    return render_template("home.html")
+    collection = db.get_all_shelves()
+    collection_books = []
+    #print(collection)
+    for shelf in collection:
+        collection_books.append(db.get_shelf_books(shelf[0]))
+    collection_bookinfo = []
+    for shelf in collection_books:
+            shelfdata = []
+            for book in shelf:
+                shelfdata.append(db.get_bookinfo(book[0]))
+                print("added data to shelf")
+            collection_bookinfo.append(shelfdata)
+            print("added shelf to collection")
+    print("collection:")
+    print(collection)
+    print("book info collection:")
+    print(collection_bookinfo)
+    return render_template("home.html", collection=collection, collection_bookinfo=collection_bookinfo)
 
 @app.route('/myshelves', methods=["GET","POST"])
 def myshelves():
@@ -32,7 +49,6 @@ def myshelves():
             #flash(title)
         collection = db.get_my_shelves(userid)
         collection_books = []
-        #print(collection)
         for shelf in collection:
             collection_books.append(db.get_shelf_books(shelf[0]))
         print(collection_books)
@@ -46,7 +62,7 @@ def myshelves():
         return render_template("myshelves.html", userid=userid, collection=collection, collection_bookinfo=collection_bookinfo)
     else:
         flash("You must log in to view your bookshelves.")
-        return render_template("home.html")
+        return redirect( url_for('home'))
 
 @app.route('/newshelf', methods=["GET","POST"])
 def newshelf():

@@ -35,4 +35,7 @@ emoryW -- 2020-06-11
 emoryW -- 2020-06-15 01:49
 - Created page where you can choose which version of the book you want if there are multiple
 - Created method to add book through bookfinder
+
+emoryW -- 2020-06-15 13:25
 - Added other books by this author section on book.html
+- Added covers for each shelf

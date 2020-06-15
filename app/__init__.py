@@ -31,8 +31,19 @@ def myshelves():
             #print(title)
             #flash(title)
         collection = db.get_my_shelves(userid)
+        collection_books = []
         #print(collection)
-        return render_template("myshelves.html", userid = userid, collection = collection)
+        for shelf in collection:
+            collection_books.append(db.get_shelf_books(shelf[0]))
+        print(collection_books)
+        collection_bookinfo = []
+        for shelf in collection_books:
+            shelfdata = []
+            for book in shelf:
+                print(book)
+                shelfdata.append(db.get_bookinfo(book[0]))
+            collection_bookinfo.append(shelfdata)
+        return render_template("myshelves.html", userid=userid, collection=collection, collection_bookinfo=collection_bookinfo)
     else:
         flash("You must log in to view your bookshelves.")
         return render_template("home.html")

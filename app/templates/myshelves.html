@@ -12,32 +12,61 @@
 </div>
 
 {% if collection|length > 0 %}
-<div class="shelves" style="padding:20px;">
+<div class="shelves" style="padding:20px;font-size:24px;">
   <!-- need to change so that it checks userid -->
   {% set rows = ((collection|length - 1)/ 3)|int + 1 %}
-  <p>{{ rows }} rows.</p>
 
     {% for x in range(0, rows) %}
       <div class="row">
         <div class="col-sm justify-content-center">
           {% set index = x * 3 %}
           {% set shelf = collection[index] %}
+          {% set shelfbooks = collection_bookinfo[index] %}
           <center>
-            <p><a href="{{ url_for('shelf', shelf_id=shelf[0]) }}"> {{ shelf[1] }}</a>
+            <p>
+              <a href="{{ url_for('shelf', shelf_id=shelf[0]) }}"> {{ shelf[1] }} </a>
               <a href="{{ url_for('delete_shelf', shelf_id=shelf[0])}}"<button type="button" class="btn btn-danger">  &times;</button></a>
             </p>
-            <p>{{ shelf[2] }} </p>
+            <div class="col-12">
+              {% if shelfbooks|length > 0 %}
+                <center><p><img src={{shelfbooks[0].cover_url}} height="150px" width="100px">
+                  {% if shelfbooks|length > 1%}
+                    <img src={{shelfbooks[1].cover_url}} height="150px" width="100px"> <p></center>
+                    {% if shelfbooks|length > 2%}
+                      <center><p><img src={{shelfbooks[2].cover_url}} height="150px" width="100px">
+                      {% if shelfbooks|length > 3%}
+                        <img src={{shelfbooks[3].cover_url}} height="150px" width="100px"> </p></center>
+                      {% endif %}
+                    {% endif %}
+                  {% endif %}
+              {% endif %}
+            </div>
           </center>
         </div>
         <div class="col-sm justify-content-center">
           {% set index = index + 1 %}
           {% if index < collection|length %}
             {% set shelf = collection[index] %}
+            {% set shelfbooks = collection_bookinfo[index] %}
             <center>
-              <p><a href="{{ url_for('shelf', shelf_id=shelf[0]) }}"> {{ shelf[1] }} </a>
+              <p>
+                <a href="{{ url_for('shelf', shelf_id=shelf[0]) }}"> {{ shelf[1] }} </a>
                 <a href="{{ url_for('delete_shelf', shelf_id=shelf[0])}}"<button type="button" class="btn btn-danger">  &times;</button></a>
               </p>
-              <p>{{ shelf[2] }}</p>
+              <div class="col-12">
+                {% if shelfbooks|length > 0 %}
+                  <center><p><img src={{shelfbooks[0].cover_url}} height="150px" width="100px">
+                    {% if shelfbooks|length > 1%}
+                      <img src={{shelfbooks[1].cover_url}} height="150px" width="100px"> <p></center>
+                      {% if shelfbooks|length > 2%}
+                        <center><p><img src={{shelfbooks[2].cover_url}} height="150px" width="100px">
+                        {% if shelfbooks|length > 3%}
+                          <img src={{shelfbooks[3].cover_url}} height="150px" width="100px"> </p></center>
+                        {% endif %}
+                      {% endif %}
+                    {% endif %}
+                {% endif %}
+              </div>
             </center>
             {% endif %}
         </div>
@@ -45,12 +74,26 @@
           {% set index = index + 1 %}
           {% if index < collection|length %}
             {% set shelf = collection[index] %}
+            {% set shelfbooks = collection_bookinfo[index] %}
             <center>
               <p>
                 <a href="{{ url_for('shelf', shelf_id=shelf[0]) }}"> {{ shelf[1] }} </a>
                 <a href="{{ url_for('delete_shelf', shelf_id=shelf[0])}}"<button type="button" class="btn btn-danger">  &times;</button></a>
               </p>
-              <p>{{ shelf[2] }}</p>
+              <div class="col-12">
+                {% if shelfbooks|length > 0 %}
+                  <center><p><img src={{shelfbooks[0].cover_url}} height="150px" width="100px">
+                    {% if shelfbooks|length > 1%}
+                      <img src={{shelfbooks[1].cover_url}} height="150px" width="100px"> <p></center>
+                      {% if shelfbooks|length > 2%}
+                        <center><p><img src={{shelfbooks[2].cover_url}} height="150px" width="100px">
+                        {% if shelfbooks|length > 3%}
+                          <img src={{shelfbooks[3].cover_url}} height="150px" width="100px"> </p></center>
+                        {% endif %}
+                      {% endif %}
+                    {% endif %}
+                {% endif %}
+              </div>
             </center>
           {% endif %}
         </div>

@@ -31,3 +31,7 @@ emoryW -- 2020-06-09
 emoryW -- 2020-06-11
 - Fixed various issues with bookshelves showing up on myshelves
 - Tried to figure out why search in shelf.html won't submit
+
+emoryW -- 2020-06-15 01:49
+- Created page where you can choose which version of the book you want if there are multiple
+- Created method to add book through bookfinder

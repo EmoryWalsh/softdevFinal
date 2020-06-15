@@ -31,7 +31,7 @@ def init_tables():
             ['shelf_id','INTEGER PRIMARY KEY AUTOINCREMENT'],
             ['uid','TEXT'],
             ['title','TEXT'],
-            ['description','TEXT']
+            ['description','TEXT'],
             ] ,
         'authors' : [
             ['book_id','INTEGER'],
@@ -44,6 +44,10 @@ def init_tables():
         'shelfbooks' : [
             ['book_id','INTEGER'],
             ['shelf_id','INTEGER']
+            ],
+        'shelflikes' : [
+            ['shelf_id','INTEGER'],
+            ['user_id','INTEGER']
             ]
         }
     db = sqlite3.connect(DB_FILENAME)
@@ -237,6 +241,12 @@ def get_my_shelves(userid):
     c = db.cursor()
     c.execute('SELECT shelf_id, title, description FROM bookshelves WHERE uid=?;',(userid,))
     myshelves = c.fetchall()
+    print(myshelves)
+    myshelves = [list(shelf) for shelf in myshelves]
+    #print(myshelves)
+    for shelf in myshelves:
+        shelf.append(get_shelflikes(shelf[0]))
+    #print(myshelves)
     return myshelves
 
 def get_shelf_info(shelf_id):
@@ -263,6 +273,7 @@ def del_shelf(shelf_id):
     print("deleted")
     return True
 
+<<<<<<< HEAD
 def shelf_count():
     db = sqlite3.connect(DB_FILENAME)
     c = db.cursor()
@@ -276,6 +287,30 @@ def get_all_shelves():
     c.execute('SELECT shelf_id, title, description FROM bookshelves;')
     allshelves = c.fetchall()
     return allshelves
+=======
+def get_shelflikes(shelf_id):
+    """Returns total number of likes for a given shelf."""
+    db = sqlite3.connect(DB_FILENAME)
+    c = db.cursor()
+    c.execute("SELECT COUNT(*) FROM shelflikes WHERE shelf_id=?;",(shelf_id,))
+    likes = list(c.fetchone())
+    print(likes[0])
+    return likes[0]
+
+def like_shelf(shelf_id, user_id):
+    """User likes shelf only if they haven't already liked it."""
+    db = sqlite3.connect(DB_FILENAME)
+    c = db.cursor()
+    c.execute("SELECT COUNT(*) FROM shelflikes WHERE shelf_id=? AND user_id=?;",(shelf_id,user_id))
+    likes = list(c.fetchone())[0]
+    if likes == 0:
+        c.execute("INSERT INTO shelflikes (shelf_id, user_id) VALUES (?, ?);", (shelf_id, user_id))
+        db.commit()
+        db.close()
+        return True
+    print("Shelf already liked.")
+    return False
+>>>>>>> a9eb610f8a999a2fa1bf7c22e15ba2c8eb3accc8
 
 # =============== STRING HELPER FUNCTIONS ===============
 def capitalize_title(str):

@@ -27,6 +27,12 @@
   </form>
 </div>
 
+<p>Likes: {{ likes }}</p>
+<a href="{{ url_for('like_shelf', shelf_id=shelf_id)}}"<button type="button" class="btn btn-default btn-sm">
+  <span class="glyphicon glyphicon-thumbs-up"></span> Like
+</button>
+</a>
+
 {% if maybeBook %}
 maybe
 {% endif %}

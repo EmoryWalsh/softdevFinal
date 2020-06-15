@@ -27,6 +27,7 @@
               <a href="{{ url_for('shelf', shelf_id=shelf[0]) }}"> {{ shelf[1] }} </a>
               <a href="{{ url_for('delete_shelf', shelf_id=shelf[0])}}"<button type="button" class="btn btn-danger">  &times;</button></a>
             </p>
+            <p>{{ shelf[2] }} </p>
             <div class="col-12">
               {% if shelfbooks|length > 0 %}
                 <center><p><img src={{shelfbooks[0].cover_url}} height="150px" width="100px">
@@ -41,6 +42,7 @@
                   {% endif %}
               {% endif %}
             </div>
+            <p><strong>Likes: </strong>{{ shelf[3] }}</p>
           </center>
         </div>
         <div class="col-sm justify-content-center">
@@ -53,6 +55,7 @@
                 <a href="{{ url_for('shelf', shelf_id=shelf[0]) }}"> {{ shelf[1] }} </a>
                 <a href="{{ url_for('delete_shelf', shelf_id=shelf[0])}}"<button type="button" class="btn btn-danger">  &times;</button></a>
               </p>
+              <p>{{ shelf[2] }}</p>
               <div class="col-12">
                 {% if shelfbooks|length > 0 %}
                   <center><p><img src={{shelfbooks[0].cover_url}} height="150px" width="100px">
@@ -67,6 +70,7 @@
                     {% endif %}
                 {% endif %}
               </div>
+              <p><strong>Likes: </strong>{{ shelf[3] }}</p>
             </center>
             {% endif %}
         </div>
@@ -80,6 +84,8 @@
                 <a href="{{ url_for('shelf', shelf_id=shelf[0]) }}"> {{ shelf[1] }} </a>
                 <a href="{{ url_for('delete_shelf', shelf_id=shelf[0])}}"<button type="button" class="btn btn-danger">  &times;</button></a>
               </p>
+              <p>{{ shelf[2] }}</p>
+              <strong>Likes: </strong>{{ shelf[3] }}
               <div class="col-12">
                 {% if shelfbooks|length > 0 %}
                   <center><p><img src={{shelfbooks[0].cover_url}} height="150px" width="100px">
@@ -94,6 +100,7 @@
                     {% endif %}
                 {% endif %}
               </div>
+              <p><strong>Likes: </strong>{{ shelf[3] }}</p>
             </center>
           {% endif %}
         </div>

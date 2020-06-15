@@ -73,15 +73,19 @@ def shelf(shelf_id):
     shelf_info = db.get_shelf_info(shelf_id)
     name = shelf_info[0][0]
     description = shelf_info[0][1]
+    likes = db.get_shelflikes(shelf_id)
     mybooks = db.get_shelf_books(shelf_id)
     mybooks = [ele[0] for ele in mybooks]
     if(mybooks != []):
         bookinfo = [db.get_bookinfo(book) for book in mybooks]
-        return render_template("shelf.html", shelf_id=shelf_id, name=name, description=description, bookdata=bookinfo)
+        #print(bookinfo)
+        #print(mybooks[0][0][0])
+        #print(mybooks[0][0][1])
+        return render_template("shelf.html", shelf_id=shelf_id, name=name, description=description, likes=likes, bookdata=bookinfo)
     else:
-        return render_template("shelf.html", shelf_id=shelf_id, name=name, description=description)
+        return render_template("shelf.html", shelf_id=shelf_id, name=name, description=description, likes=likes)
 
-@app.route("/delshelf")
+@app.route("/delshelf", methods=["GET"])
 def delete_shelf():
     if ('uid' in session):
         if ('shelf_id' in request.args):
@@ -91,6 +95,18 @@ def delete_shelf():
         return redirect(url_for("myshelves"))
     flash("You must log in to view your bookshelves.")
     return render_template("home.html")
+
+@app.route("/likeshelf", methods=["GET"])
+def like_shelf():
+    if ('uid' in session):
+        if ('shelf_id' in request.args):
+            shelf_id = request.args.get("shelf_id")
+            user_id = session['uid']
+            #flash("liked " + str(shelf_id) )
+            db.like_shelf(shelf_id, user_id)
+            return redirect(url_for("shelf", shelf_id=shelf_id))
+    flash("You must be logged in to like a shelf.")
+    return redirect(url_for("shelf", shelf_id=shelf_id))
 
 @app.route('/bookfinder', methods=["GET","POST"])
 def bookfinder():
@@ -136,7 +152,7 @@ def addbookbookfinder(book_name, shelf_id):
         return redirect( url_for('shelf', shelf_id=shelf_id))
     return redirect( url_for('shelf', shelf_id=shelf_id))
 
-@app.route("/delbook")
+@app.route("/delbook", methods=["GET"])
 def delbook():
     if ('uid' in session):
         if ('shelf_id' in request.args and 'book_id' in request.args):

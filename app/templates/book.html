@@ -5,7 +5,6 @@
 {% block pgtitle %}{{ title }} by {{ authors }}{% endblock%}
 
 {% block style %}
-
 {% endblock %}
 
 {% block content %}
@@ -28,7 +27,7 @@
     <button class="btn btn-dark" type="submit">Add to Bookshelf</button>
   </form></center>
 </div>
-<div style="padding:30px;font-size:20px;"">
+<div style="padding:30px;font-size:20px;">
   <strong><p>Description:</p></strong>
   <p>{{ description }}</p>
   <br>
@@ -41,5 +40,21 @@
   <br>
   <p><strong>Page Count:</strong> {{ pages }}</p>
   <br>
+</div>
 
+{% if author_books %}
+<div class="container" style="padding:30px;font-size:20px;">
+  <strong>Other books by {{authors}}:</strong>
+  <div class="container">
+    <div class="row text-center">
+      {% set len = author_books|length %}
+      {% for x in range(0, len) %}
+        {% set book = author_books[x] %}
+        <div class="col-xs-4" style="padding:10px;">
+          <center><p><a href="{{'/book/%s'%book.id }}"><img src={{book.cover_url}} height="250px" width="150px"></a><p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
 {% endblock %}

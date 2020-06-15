@@ -19,6 +19,8 @@
 
 ## Website Description:
 
+The Bookshelf is your one stop shop for finding new books to read and seeing what others are reading. To find yourself a new book to read, head on over to the 'Bookfinder'. Here, you can select a genre, a minimum length, and a maximum length for the book you want. Press submit and a whole list of books will come up. To see more information on any of these books, just click on the cover! You can also create bookshelves for yourself. Your bookshelves can be themed, they can show the books you read during a certain time period, or anything else you want! To create a bookshelf, go to 'My Bookshelves' and click the 'Create a bookshelf' button. There are two ways to add books to your bookshelves. First, in 'My Bookshelves', you can select the bookshelf you want to add to and use the add book form. Second, you can use 'Bookfinder', and when you click into a book, use the 'Add to Bookshelf' button.
+
 ## Launch Code:
 
 

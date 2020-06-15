@@ -166,6 +166,24 @@ def searchfor_books(book_title):
     print("Book not found")
     return False
 
+def searchfor_author(book_id):
+    """Return all book by the author of book_id"""
+    bookdata = get_bookinfo(book_id)
+    author = bookdata['authors']
+    #print(author)
+    db = sqlite3.connect(DB_FILENAME)
+    c = db.cursor()
+    c.execute('SELECT DISTINCT book_id FROM authors WHERE author=?;',(author,))
+    books = c.fetchall()
+    if(len(books)>1):
+        other_books = []
+        for book in books:
+            if book[0] != book_id:
+                other_books.append(get_bookinfo(book[0]))
+        return other_books
+    print("No other books by this author found.")
+    return None
+
 def get_genres():
     """Returns list of unique genres in book_data.csv"""
     db = sqlite3.connect(DB_FILENAME)
@@ -319,3 +337,5 @@ init_tables()
 #book_finder("Science Fiction", 300, 400)
 #print(list_primer([3, 2, 6, 87, 2]))
 #print(searchfor_books("pride and prejudice"))
+#book = searchfor_author("160")
+#rint(book[0]["title"])

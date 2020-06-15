@@ -31,8 +31,19 @@ def myshelves():
             #print(title)
             #flash(title)
         collection = db.get_my_shelves(userid)
+        collection_books = []
         #print(collection)
-        return render_template("myshelves.html", userid = userid, collection = collection)
+        for shelf in collection:
+            collection_books.append(db.get_shelf_books(shelf[0]))
+        print(collection_books)
+        collection_bookinfo = []
+        for shelf in collection_books:
+            shelfdata = []
+            for book in shelf:
+                print(book)
+                shelfdata.append(db.get_bookinfo(book[0]))
+            collection_bookinfo.append(shelfdata)
+        return render_template("myshelves.html", userid=userid, collection=collection, collection_bookinfo=collection_bookinfo)
     else:
         flash("You must log in to view your bookshelves.")
         return render_template("home.html")
@@ -44,13 +55,11 @@ def newshelf():
 @app.route("/<shelf_id>/shelf", methods=["GET","POST"])
 def shelf(shelf_id):
     shelf_info = db.get_shelf_info(shelf_id)
-    #print(shelf_info)
     name = shelf_info[0][0]
     description = shelf_info[0][1]
     likes = db.get_shelflikes(shelf_id)
     mybooks = db.get_shelf_books(shelf_id)
     mybooks = [ele[0] for ele in mybooks]
-    print(mybooks)
     if(mybooks != []):
         bookinfo = [db.get_bookinfo(book) for book in mybooks]
         #print(bookinfo)
@@ -153,6 +162,7 @@ def bookdata(book_id):
     genres = data['genres']
     pages = data['pages']
     url = data['cover_url']
+    author_books = db.searchfor_author(book_id)
     if('uid' in session):
         userid = session['uid']
         shelves = db.get_my_shelves(userid)
@@ -161,11 +171,10 @@ def bookdata(book_id):
             #book_id = db.searchfor_book(book_title)
             for shelf in shelves:
                 if shelf[1] == bookshelf:
-                    print("add")
                     shelf_id = shelf[0]
                     return redirect(url_for('addbookbookfinder', book_name=book_title, shelf_id=shelf_id))
-        return render_template("book.html", title=book_title, description=description, rating=rating, authors=authors, genres=genres, pages=pages, url=url, shelves=shelves)
-    return render_template("book.html", title=book_title, description=description, rating=rating, authors=authors, genres=genres, pages=pages, url=url)
+        return render_template("book.html", title=book_title, description=description, rating=rating, authors=authors, genres=genres, pages=pages, url=url, shelves=shelves, author_books=author_books)
+    return render_template("book.html", title=book_title, description=description, rating=rating, authors=authors, genres=genres, pages=pages, url=url, author_books=author_books)
 
 @app.route('/help')
 def help():

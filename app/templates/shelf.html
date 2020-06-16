@@ -30,16 +30,16 @@
 {% endif %}
 
 <div style="padding:20px">
-  <p>Likes: {{ likes }}</p>
+  <h4><strong>Likes: </strong>{{ likes }}</h4>
 </div>
-{% if userid %}
+
 <div style="padding-left:20px">
-  <a href="{{ url_for('like_shelf', shelf_id=shelf_id)}}"<button type="button" class="btn btn-default btn-sm">
+  <a href="{{ url_for('like_shelf', shelf_id=shelf_id, viewing=shelf_id)}}"<button type="button" class="btn btn-default btn-sm">
     <span class="glyphicon glyphicon-thumbs-up"></span> Like
   </button>
   </a>
 </div>
-{% endif %}
+
 
 {% if bookdata %}
     <div style="padding:20px;font-size:20px;">

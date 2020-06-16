@@ -16,11 +16,20 @@ app.secret_key = os.urandom(32)
 @app.route('/')
 def home():
     collection = db.get_all_shelves()
+    popular = db.get_popularshelves()
+    if len(popular) > 3:
+        popular = popular[-3:]
     collection_books = []
+    pop_books = []
     #print(collection)
+    collection = [list(shelf) for shelf in collection]
     for shelf in collection:
         collection_books.append(db.get_shelf_books(shelf[0]))
+        shelf.append(db.get_shelflikes(shelf[0]))
+    for shelf in popular:
+        pop_books.append(db.get_shelf_books(shelf[0]))
     collection_bookinfo = []
+    pop_bookinfo = []
     for shelf in collection_books:
             shelfdata = []
             for book in shelf:
@@ -28,11 +37,16 @@ def home():
                 #print("added data to shelf")
             collection_bookinfo.append(shelfdata)
             #print("added shelf to collection")
+    for shelf in pop_books:
+        shelfdata = []
+        for book in shelf:
+            shelfdata.append(db.get_bookinfo(book[0]))
+        pop_bookinfo.append(shelfdata)
     #print("collection:")
     #print(collection)
     #print("book info collection:")
     #print(collection_bookinfo)
-    return render_template("home.html", collection=collection, collection_bookinfo=collection_bookinfo)
+    return render_template("home.html", collection=collection, collection_bookinfo=collection_bookinfo, popular=popular, pop_bookinfo=pop_bookinfo)
 
 @app.route('/myshelves', methods=["GET","POST"])
 def myshelves():
@@ -103,11 +117,18 @@ def like_shelf():
         if ('shelf_id' in request.args):
             shelf_id = request.args.get("shelf_id")
             user_id = session['uid']
+            print(shelf_id)
             #flash("liked " + str(shelf_id) )
-            db.like_shelf(shelf_id, user_id)
-            return redirect(url_for("shelf", shelf_id=shelf_id))
+            if not db.like_shelf(shelf_id, user_id):
+                flash("You can only like a shelf once.")
+            if ('viewing' in request.args):
+                return redirect(url_for("shelf", shelf_id=shelf_id))
+            return redirect(url_for("home"))
     flash("You must be logged in to like a shelf.")
-    return redirect(url_for("shelf", shelf_id=shelf_id))
+    if ('viewing' in request.args):
+        print("true")
+        return redirect(url_for("shelf", shelf_id=request.args.get("shelf_id")))
+    return redirect(url_for("home"))
 
 @app.route('/bookfinder', methods=["GET","POST"])
 def bookfinder():

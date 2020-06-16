@@ -273,7 +273,6 @@ def del_shelf(shelf_id):
     print("deleted")
     return True
 
-<<<<<<< HEAD
 def shelf_count():
     db = sqlite3.connect(DB_FILENAME)
     c = db.cursor()
@@ -287,7 +286,7 @@ def get_all_shelves():
     c.execute('SELECT shelf_id, title, description FROM bookshelves;')
     allshelves = c.fetchall()
     return allshelves
-=======
+
 def get_shelflikes(shelf_id):
     """Returns total number of likes for a given shelf."""
     db = sqlite3.connect(DB_FILENAME)
@@ -310,7 +309,6 @@ def like_shelf(shelf_id, user_id):
         return True
     print("Shelf already liked.")
     return False
->>>>>>> a9eb610f8a999a2fa1bf7c22e15ba2c8eb3accc8
 
 # =============== STRING HELPER FUNCTIONS ===============
 def capitalize_title(str):

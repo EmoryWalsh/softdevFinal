@@ -31,11 +31,15 @@
 
 <div style="padding:20px">
   <p>Likes: {{ likes }}</p>
+</div>
+{% if userid %}
+<div style="padding-left:20px">
   <a href="{{ url_for('like_shelf', shelf_id=shelf_id)}}"<button type="button" class="btn btn-default btn-sm">
     <span class="glyphicon glyphicon-thumbs-up"></span> Like
   </button>
   </a>
 </div>
+{% endif %}
 
 {% if bookdata %}
     <div style="padding:20px;font-size:20px;">
@@ -50,9 +54,11 @@
             <center>
               {% set book = bookdata[index] %}
               <p><a href="/book/{{book.id}}"><img src={{book.cover_url}} height="350px" width="250px"></a><p>
-              <p><strong>{{book.title}}</strong>
-                <a href="{{ url_for('delbook', shelf_id=shelf_id, book_id=book.id)}}"<button type="button" class="btn btn-danger">  &times;</button></a>
-              </p>
+              {% if userid == owner %}
+                <p><strong>{{book.title}}</strong>
+                  <a href="{{ url_for('delbook', shelf_id=shelf_id, book_id=book.id)}}"<button type="button" class="btn btn-danger">  &times;</button></a>
+                </p>
+              {% endif %}
               <p> by {{book.authors}}</p>
             </center>
           </div>
@@ -61,9 +67,11 @@
               {% if (index + 1) < bookdata|length %}
               {% set book = bookdata[index + 1] %}
               <p><a href="/book/{{book.id}}"><img src={{book.cover_url}} height="350px" width="250px"></a><p>
-              <p><strong>{{book.title}}</strong>
-                <a href="{{ url_for('delbook', shelf_id=shelf_id, book_id=book.id)}}"<button type="button" class="btn btn-danger">  &times;</button></a>
-              </p>
+              {% if userid == owner %}
+                <p><strong>{{book.title}}</strong>
+                  <a href="{{ url_for('delbook', shelf_id=shelf_id, book_id=book.id)}}"<button type="button" class="btn btn-danger">  &times;</button></a>
+                </p>
+              {% endif %}
               <p> by {{book.authors}}</p>
               {% endif %}
             </center>
@@ -73,9 +81,11 @@
                 {% if (index + 2) < bookdata|length %}
                 {% set book = bookdata[index+2] %}
                 <p><a href="/book/{{book.id}}"><img src={{book.cover_url}} height="350px" width="250px"></a><p>
-                <p><strong>{{book.title}}</strong>
-                  <a href="{{ url_for('delbook', shelf_id=shelf_id, book_id=book.id)}}"<button type="button" class="btn btn-danger">  &times;</button></a>
-                </p>
+                  {% if userid == owner %}
+                    <p><strong>{{book.title}}</strong>
+                      <a href="{{ url_for('delbook', shelf_id=shelf_id, book_id=book.id)}}"<button type="button" class="btn btn-danger">  &times;</button></a>
+                    </p>
+                  {% endif %}
                 <p>by {{book.authors}}</p>
                 {% endif %}
               </center>

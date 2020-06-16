@@ -217,7 +217,7 @@ def book_finder(genre, min_pg, max_pg):
 def add_shelf(uid, name, descr):
     db = sqlite3.connect(DB_FILENAME)
     c = db.cursor();
-    print([uid, name, descr])
+    #print([uid, name, descr])
     c.execute("INSERT INTO bookshelves (uid, title, description) VALUES (?, ?, ?);", (uid, name, descr))
     db.commit()
     db.close()
@@ -241,12 +241,9 @@ def get_my_shelves(userid):
     c = db.cursor()
     c.execute('SELECT shelf_id, title, description FROM bookshelves WHERE uid=?;',(userid,))
     myshelves = c.fetchall()
-    print(myshelves)
     myshelves = [list(shelf) for shelf in myshelves]
-    #print(myshelves)
     for shelf in myshelves:
         shelf.append(get_shelflikes(shelf[0]))
-    #print(myshelves)
     return myshelves
 
 def get_shelf_info(shelf_id):
@@ -270,7 +267,7 @@ def del_shelf(shelf_id):
     c.execute("DELETE FROM bookshelves WHERE shelf_id=?;",(shelf_id,))
     db.commit()
     db.close()
-    print("deleted")
+    #print("deleted")
     return True
 
 def shelf_count():
@@ -292,7 +289,7 @@ def get_shelflikes(shelf_id):
     c = db.cursor()
     c.execute("SELECT COUNT(*) FROM shelflikes WHERE shelf_id=?;",(shelf_id,))
     likes = list(c.fetchone())
-    print(likes[0])
+    #print(likes[0])
     return likes[0]
 
 def like_shelf(shelf_id, user_id):

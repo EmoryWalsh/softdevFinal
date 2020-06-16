@@ -28,9 +28,23 @@ emoryW -- 2020-06-09
 - Added pages to book db table
 - Created a page for each book accessible from bookfinder
 
+sophieN -- 2020-06-09 22:59
+- started making html page for bookshelves
+- made add_shelf and add_book functions in the database to create bookshelves
+
+sophieN -- 2020-06-10 13:14
+- started making html file to display a single shelf
+- redid route for adding a shelf so that it processing the input properly and adds to the database and made route for individual shelves
+- made get_my_shelves, get_shelf_info, and get_shelf_books function in database python file
+- did trouble shooting with the routes for adding a shelf and transferring the info to html
+
 emoryW -- 2020-06-11
 - Fixed various issues with bookshelves showing up on myshelves
 - Tried to figure out why search in shelf.html won't submit
+
+sophieN -- 2020-06-11 18:46
+- Helped Emory trouble shoot a form not submitting
+- made route to deal with adding books
 
 emoryW -- 2020-06-15 01:49
 - Created page where you can choose which version of the book you want if there are multiple
@@ -39,3 +53,6 @@ emoryW -- 2020-06-15 01:49
 emoryW -- 2020-06-15 13:25
 - Added other books by this author section on book.html
 - Added covers for each shelf
+
+sophieN -- 2020-6-15 17:37
+- Did the html and python to store and display the recently created bookshelves on the home page

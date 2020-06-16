@@ -1,6 +1,6 @@
 # The Bookshelf by Flying Saucers
 
-Video Demo Here!](https://youtu.be/JhO5IplBRrA)
+[Video Demo Here!](https://youtu.be/JhO5IplBRrA)
 
 **Roster / Roles:**
 

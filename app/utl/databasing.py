@@ -198,7 +198,7 @@ def book_finder(genre, min_pg, max_pg):
     """Returns list of books that match input queries"""
     db = sqlite3.connect(DB_FILENAME)
     c = db.cursor()
-    c.execute("SELECT book_id FROM genres WHERE genre=? LIMIT 250;", (genre,))
+    c.execute("SELECT book_id FROM genres WHERE genre=? LIMIT 300;", (genre,))
     book_ids = c.fetchall()
     book_ids = [i for n, i in enumerate(book_ids) if i not in book_ids[n + 1:]]
     book_ids = [book_id[0] for book_id in book_ids]
@@ -217,7 +217,7 @@ def book_finder(genre, min_pg, max_pg):
 def add_shelf(uid, name, descr):
     db = sqlite3.connect(DB_FILENAME)
     c = db.cursor();
-    print([uid, name, descr])
+    #print([uid, name, descr])
     c.execute("INSERT INTO bookshelves (uid, title, description) VALUES (?, ?, ?);", (uid, name, descr))
     db.commit()
     db.close()
@@ -241,18 +241,15 @@ def get_my_shelves(userid):
     c = db.cursor()
     c.execute('SELECT shelf_id, title, description FROM bookshelves WHERE uid=?;',(userid,))
     myshelves = c.fetchall()
-    print(myshelves)
     myshelves = [list(shelf) for shelf in myshelves]
-    #print(myshelves)
     for shelf in myshelves:
         shelf.append(get_shelflikes(shelf[0]))
-    #print(myshelves)
     return myshelves
 
 def get_shelf_info(shelf_id):
     db = sqlite3.connect(DB_FILENAME)
     c = db.cursor()
-    c.execute('SELECT title, description FROM bookshelves WHERE shelf_id=?;',(shelf_id,))
+    c.execute('SELECT title, description, uid FROM bookshelves WHERE shelf_id=?;',(shelf_id,))
     shelfinfo = c.fetchall()
     return shelfinfo
 
@@ -268,9 +265,11 @@ def del_shelf(shelf_id):
     db = sqlite3.connect(DB_FILENAME)
     c = db.cursor()
     c.execute("DELETE FROM bookshelves WHERE shelf_id=?;",(shelf_id,))
+    c.execute("DELETE FROM shelflikes WHERE shelf_id=?;",(shelf_id,))
+    c.execute("DELETE FROM shelfbooks WHERE shelf_id=?;",(shelf_id,))
     db.commit()
     db.close()
-    print("deleted")
+    #print("deleted")
     return True
 
 def shelf_count():
@@ -293,15 +292,18 @@ def get_shelflikes(shelf_id):
     c = db.cursor()
     c.execute("SELECT COUNT(*) FROM shelflikes WHERE shelf_id=?;",(shelf_id,))
     likes = list(c.fetchone())
-    print(likes[0])
+    #print(likes[0])
     return likes[0]
 
 def like_shelf(shelf_id, user_id):
     """User likes shelf only if they haven't already liked it."""
+    print(shelf_id)
+    print(user_id)
     db = sqlite3.connect(DB_FILENAME)
     c = db.cursor()
     c.execute("SELECT COUNT(*) FROM shelflikes WHERE shelf_id=? AND user_id=?;",(shelf_id,user_id))
     likes = list(c.fetchone())[0]
+    print(likes)
     if likes == 0:
         c.execute("INSERT INTO shelflikes (shelf_id, user_id) VALUES (?, ?);", (shelf_id, user_id))
         db.commit()
@@ -309,6 +311,17 @@ def like_shelf(shelf_id, user_id):
         return True
     print("Shelf already liked.")
     return False
+
+def get_popularshelves():
+    all = get_all_shelves()
+    all = [list(shelf) for shelf in all]
+    #print(all)
+    for shelf in all:
+        shelf.append(get_shelflikes(shelf[0]))
+    #print(all)
+    all.sort(key=lambda x: x[3])
+    #print(all)
+    return all
 
 # =============== STRING HELPER FUNCTIONS ===============
 def capitalize_title(str):

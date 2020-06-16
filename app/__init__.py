@@ -25,13 +25,13 @@ def home():
             shelfdata = []
             for book in shelf:
                 shelfdata.append(db.get_bookinfo(book[0]))
-                print("added data to shelf")
+                #print("added data to shelf")
             collection_bookinfo.append(shelfdata)
-            print("added shelf to collection")
-    print("collection:")
-    print(collection)
-    print("book info collection:")
-    print(collection_bookinfo)
+            #print("added shelf to collection")
+    #print("collection:")
+    #print(collection)
+    #print("book info collection:")
+    #print(collection_bookinfo)
     return render_template("home.html", collection=collection, collection_bookinfo=collection_bookinfo)
 
 @app.route('/myshelves', methods=["GET","POST"])
@@ -43,7 +43,7 @@ def myshelves():
             userid = session['uid']
             name = request.form.get("shelfName")
             description = request.form.get("shelfDescription")
-            flash([name, description])
+            flash("Shelf created.")
             db.add_shelf(userid, name, description)
             #print(title)
             #flash(title)
@@ -51,12 +51,12 @@ def myshelves():
         collection_books = []
         for shelf in collection:
             collection_books.append(db.get_shelf_books(shelf[0]))
-        print(collection_books)
+        #print(collection_books)
         collection_bookinfo = []
         for shelf in collection_books:
             shelfdata = []
             for book in shelf:
-                print(book)
+                #print(book)
                 shelfdata.append(db.get_bookinfo(book[0]))
             collection_bookinfo.append(shelfdata)
         return render_template("myshelves.html", userid=userid, collection=collection, collection_bookinfo=collection_bookinfo)
@@ -74,16 +74,17 @@ def shelf(shelf_id):
     name = shelf_info[0][0]
     description = shelf_info[0][1]
     likes = db.get_shelflikes(shelf_id)
+    owner = shelf_info[0][2]
     mybooks = db.get_shelf_books(shelf_id)
     mybooks = [ele[0] for ele in mybooks]
+    userid = None
+    if('uid' in session):
+        userid = session['uid']
     if(mybooks != []):
         bookinfo = [db.get_bookinfo(book) for book in mybooks]
-        #print(bookinfo)
-        #print(mybooks[0][0][0])
-        #print(mybooks[0][0][1])
-        return render_template("shelf.html", shelf_id=shelf_id, name=name, description=description, likes=likes, bookdata=bookinfo)
+        return render_template("shelf.html", shelf_id=shelf_id, name=name, description=description, likes=likes, bookdata=bookinfo, userid=userid, owner=owner)
     else:
-        return render_template("shelf.html", shelf_id=shelf_id, name=name, description=description, likes=likes)
+        return render_template("shelf.html", shelf_id=shelf_id, name=name, description=description, likes=likes, userid=userid, owner=owner)
 
 @app.route("/delshelf", methods=["GET"])
 def delete_shelf():

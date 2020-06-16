@@ -11,13 +11,18 @@
 }
 {% endblock %}
 
+
 {% block content %}
+<center>
+<h3><i>Ran out of books to read?</i></h3>
+<h4>Enter your favorite genre and ideal length, and instantly receive a personalized list of book recommendations selected from the "best" 300 books.</h4>
+</center>
 <div style="padding:20px">
   <form action="/bookfinder" method="post">
     <div class="row" style="padding-bottom:10px">
       <div class="col-sm">
         <div class="form-group">
-          <select class="form-control" id="genre" name="genre">
+          <select class="form-control" id="genre" name="genre" required>
             <option value="" selected disabled>Tags</option>
             {% for genre in genres%}
               <option>{{ genre }}</option>

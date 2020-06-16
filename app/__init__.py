@@ -74,16 +74,20 @@ def shelf(shelf_id):
     name = shelf_info[0][0]
     description = shelf_info[0][1]
     likes = db.get_shelflikes(shelf_id)
+    owner = shelf_info[0][2]
     mybooks = db.get_shelf_books(shelf_id)
     mybooks = [ele[0] for ele in mybooks]
+    userid = None
+    if('uid' in session):
+        userid = session['uid']
     if(mybooks != []):
         bookinfo = [db.get_bookinfo(book) for book in mybooks]
         #print(bookinfo)
         #print(mybooks[0][0][0])
         #print(mybooks[0][0][1])
-        return render_template("shelf.html", shelf_id=shelf_id, name=name, description=description, likes=likes, bookdata=bookinfo)
+        return render_template("shelf.html", shelf_id=shelf_id, name=name, description=description, likes=likes, bookdata=bookinfo, userid=userid, owner=owner)
     else:
-        return render_template("shelf.html", shelf_id=shelf_id, name=name, description=description, likes=likes)
+        return render_template("shelf.html", shelf_id=shelf_id, name=name, description=description, likes=likes, userid=userid, owner=owner)
 
 @app.route("/delshelf", methods=["GET"])
 def delete_shelf():

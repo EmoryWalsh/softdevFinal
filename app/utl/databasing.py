@@ -252,7 +252,7 @@ def get_my_shelves(userid):
 def get_shelf_info(shelf_id):
     db = sqlite3.connect(DB_FILENAME)
     c = db.cursor()
-    c.execute('SELECT title, description FROM bookshelves WHERE shelf_id=?;',(shelf_id,))
+    c.execute('SELECT title, description, uid FROM bookshelves WHERE shelf_id=?;',(shelf_id,))
     shelfinfo = c.fetchall()
     return shelfinfo
 

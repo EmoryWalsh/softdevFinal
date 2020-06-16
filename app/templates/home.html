@@ -6,7 +6,113 @@
 
 {% block content %}
 <div style="padding:20px">
-  <h4>Recently Created Bookshelves:</h4>
+  <h4><strong>Most Popular Bookshelves:</strong></h4>
+</div>
+
+{% if popular|length > 0 %}
+<div class="shelves" style="padding:20px;font-size:24px;">
+        <div class="row">
+          <div class="col-sm justify-content-center">
+            {% set index = 2 %}
+            {% set shelf = popular[index] %}
+            {% set shelfbooks = pop_bookinfo[index] %}
+            <center>
+              <p>
+                <a href="{{ url_for('shelf', shelf_id=shelf[0]) }}"> {{ shelf[1] }} </a>
+              </p>
+              <div class="col-12">
+                {% if shelfbooks|length > 0 %}
+                  <center><p><img src={{shelfbooks[0].cover_url}} height="150px" width="100px">
+                    {% if shelfbooks|length > 1%}
+                      <img src={{shelfbooks[1].cover_url}} height="150px" width="100px"> <p></center>
+                      {% if shelfbooks|length > 2%}
+                        <center><p><img src={{shelfbooks[2].cover_url}} height="150px" width="100px">
+                        {% if shelfbooks|length > 3%}
+                          <img src={{shelfbooks[3].cover_url}} height="150px" width="100px"> </p></center>
+                        {% endif %}
+                      {% endif %}
+                    {% endif %}
+                {% endif %}
+              </div>
+              <p><strong>Likes: </strong>{{ shelf[3] }}</p>
+              <a href="{{ url_for('like_shelf', shelf_id=shelf[0])}}"<button type="button" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-thumbs-up"></span> Like
+              </button>
+              </a>
+            </center>
+          </div>
+          <div class="col-sm justify-content-center">
+            {% set index = 1 %}
+            {% if popular|length > 1%}
+              {% set shelf = popular[index] %}
+              {% set shelfbooks = pop_bookinfo[index] %}
+              <center>
+                <p>
+                  <a href="{{ url_for('shelf', shelf_id=shelf[0]) }}"> {{ shelf[1] }} </a>
+                </p>
+                <div class="col-12">
+                  {% if shelfbooks|length > 0 %}
+                    <center><p><img src={{shelfbooks[0].cover_url}} height="150px" width="100px">
+                      {% if shelfbooks|length > 1%}
+                        <img src={{shelfbooks[1].cover_url}} height="150px" width="100px"> <p></center>
+                        {% if shelfbooks|length > 2%}
+                          <center><p><img src={{shelfbooks[2].cover_url}} height="150px" width="100px">
+                          {% if shelfbooks|length > 3%}
+                            <img src={{shelfbooks[3].cover_url}} height="150px" width="100px"> </p></center>
+                          {% endif %}
+                        {% endif %}
+                      {% endif %}
+                  {% endif %}
+                </div>
+                <p><strong>Likes: </strong>{{ shelf[3] }}</p>
+                <a href="{{ url_for('like_shelf', shelf_id=shelf[0])}}"<button type="button" class="btn btn-default btn-sm">
+                  <span class="glyphicon glyphicon-thumbs-up"></span> Like
+                </button>
+                </a>
+              </center>
+              {% endif %}
+          </div>
+          <div class="col-sm justify-content-center">
+            {% set index = 0 %}
+            {% if popular|length > 2 %}
+              {% set shelf = popular[index] %}
+              {% set shelfbooks = pop_bookinfo[index] %}
+              <center>
+                <p>
+                  <a href="{{ url_for('shelf', shelf_id=shelf[0]) }}"> {{ shelf[1] }} </a>
+                </p>
+                <div class="col-12">
+                  {% if shelfbooks|length > 0 %}
+                    <center><p><img src={{shelfbooks[0].cover_url}} height="150px" width="100px">
+                      {% if shelfbooks|length > 1%}
+                        <img src={{shelfbooks[1].cover_url}} height="150px" width="100px"> <p></center>
+                        {% if shelfbooks|length > 2%}
+                          <center><p><img src={{shelfbooks[2].cover_url}} height="150px" width="100px">
+                          {% if shelfbooks|length > 3%}
+                            <img src={{shelfbooks[3].cover_url}} height="150px" width="100px"> </p></center>
+                          {% endif %}
+                        {% endif %}
+                      {% endif %}
+                  {% endif %}
+                </div>
+                <p><strong>Likes: </strong>{{ shelf[3] }}</p>
+                <a href="{{ url_for('like_shelf', shelf_id=shelf[0])}}"<button type="button" class="btn btn-default btn-sm">
+                  <span class="glyphicon glyphicon-thumbs-up"></span> Like
+                </button>
+                </a>
+              </center>
+            {% endif %}
+          </div>
+          {% set index = index - 1 %}
+        </div>
+
+    </div>
+    {% else %}
+      <p>No bookshelves exist yet!</p>
+    {% endif %}
+
+<div style="padding:20px">
+  <h4><strong>Recently Created Bookshelves:</strong></h4>
 </div>
 
 {% if collection|length > 0 %}
@@ -36,6 +142,11 @@
                     {% endif %}
                 {% endif %}
               </div>
+              <p><strong>Likes: </strong>{{ shelf[3] }}</p>
+              <a href="{{ url_for('like_shelf', shelf_id=shelf_id)}}"<button type="button" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-thumbs-up"></span> Like
+              </button>
+              </a>
             </center>
           </div>
           <div class="col-sm justify-content-center">
@@ -61,6 +172,11 @@
                       {% endif %}
                   {% endif %}
                 </div>
+                <p><strong>Likes: </strong>{{ shelf[3] }}</p>
+                <a href="{{ url_for('like_shelf', shelf_id=shelf_id)}}"<button type="button" class="btn btn-default btn-sm">
+                  <span class="glyphicon glyphicon-thumbs-up"></span> Like
+                </button>
+                </a>
               </center>
               {% endif %}
           </div>
@@ -87,6 +203,11 @@
                       {% endif %}
                   {% endif %}
                 </div>
+                <p><strong>Likes: </strong>{{ shelf[3] }}</p>
+                <a href="{{ url_for('like_shelf', shelf_id=shelf_id)}}"<button type="button" class="btn btn-default btn-sm">
+                  <span class="glyphicon glyphicon-thumbs-up"></span> Like
+                </button>
+                </a>
               </center>
             {% endif %}
           </div>
